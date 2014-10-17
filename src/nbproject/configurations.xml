@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>EM.h</itemPath>
+      <itemPath>assignMatrixValues.h</itemPath>
+      <itemPath>calLD.h</itemPath>
+      <itemPath>mcPerm.h</itemPath>
+      <itemPath>pairwiseMatrices.h</itemPath>
+      <itemPath>pairwisePops.h</itemPath>
+      <itemPath>readData.h</itemPath>
+      <itemPath>run.h</itemPath>
+      <itemPath>writeFile.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>EM.cpp</itemPath>
+      <itemPath>assignMatrixValues.cpp</itemPath>
+      <itemPath>calLD.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+      <itemPath>mcPerm.cpp</itemPath>
+      <itemPath>pairwiseMatrices.cpp</itemPath>
+      <itemPath>pairwisePops.cpp</itemPath>
+      <itemPath>readData.cpp</itemPath>
+      <itemPath>run.cpp</itemPath>
+      <itemPath>writeFile.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include</pElem>
+            <pElem>../Eigen3.22</pElem>
+          </incDir>
+          <commandLine>-std=c++11</commandLine>
+        </ccTool>
+      </compileType>
+      <item path="EM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="assignMatrixValues.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="assignMatrixValues.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="calLD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="calLD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="mcPerm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="mcPerm.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="pairwiseMatrices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pairwiseMatrices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="pairwisePops.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pairwisePops.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="readData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="readData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="run.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="run.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="writeFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="writeFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="EM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="assignMatrixValues.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="assignMatrixValues.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="calLD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="calLD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="mcPerm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="mcPerm.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="pairwiseMatrices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pairwiseMatrices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="pairwisePops.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pairwisePops.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="readData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="readData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="run.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="run.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="writeFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="writeFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
