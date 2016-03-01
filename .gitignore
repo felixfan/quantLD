@@ -24,13 +24,14 @@ $RECYCLE.BIN/
 .DS_Store
 .AppleDouble
 .LSOverride
-# do not upload
-npproject
-dist
-build
-testData
-build.xml
-mainfest.mf
+
+# do not upload (!!!)
+npproject/
+dist/
+build/
+testData/
+*.xml
+*.mf
 
 # Icon must ends with two \r.
 Icon
