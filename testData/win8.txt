@@ -1,0 +1,4 @@
+pop1	pop2	position	raw_score
+pop1.txt	pop2.txt	4.50	0.1885
+pop1.txt	pop2.txt	5.50	0.1774
+pop1.txt	pop2.txt	6.50	0.3196

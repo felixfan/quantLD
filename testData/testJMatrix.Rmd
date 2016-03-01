@@ -1,0 +1,69 @@
+---
+title: "testJMatrix"
+output: html_document
+---
+
+```{r comment=''}
+set.seed(999)
+a = round(abs(rnorm(50)),2)
+b = round(abs(rnorm(50)),2)
+a = a[a<=1]
+b = b[b<=1]
+a = sample(a,25)
+b = sample(b,25)
+ma = matrix(a, nrow=5, ncol=5)
+mb = matrix(b,nrow=5,ncol =5)
+ma
+mb
+```
+
+```{r comment=''}
+hma = ma
+hma[lower.tri(hma)] <- 0
+hmb = mb
+hmb[lower.tri(hmb)] <- 0
+hma
+hmb
+```
+
+```{r comment=''}
+sum(abs(hma-hmb))
+```
+
+```{r comment=''}
+200 * sum(abs(hma-hmb)) / sum(hma-hmb)
+```
+
+```{r comment=''}
+ea <- eigen(ma)$values
+eb <- eigen(mb)$values
+dab <- ea - eb
+sum(abs(dab))
+
+sort(ea)
+sort(eb)
+dab2 <- sort(ea) - sort(eb)
+sum(abs(dab2))
+```
+
+```{r comment=''}
+sum(abs(ma-mb)/(abs(ma) + abs(mb)))
+```
+
+```{r comment=''}
+sum(abs(ma-mb))
+```
+
+```{r comment=''}
+sqrt(sum((ma-mb)^2))
+```
+
+```{r comment=''}
+max(abs(ma-mb))
+```
+
+```{r comment=''}
+sum(abs(ma-mb)/(ma+mb))
+```
+
+

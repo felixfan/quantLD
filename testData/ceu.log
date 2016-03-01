@@ -1,0 +1,50 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Web-based version check ( --noweb to skip )
+Connecting to web...  OK, v1.07 is current
+
++++ PLINK 1.9 is now available! See above website for details +++ 
+
+Writing this text to log file [ ceu.log ]
+Analysis started: Thu Nov 12 14:41:41 2015
+
+Options in effect:
+	--bfile ceu_chr6
+	--extract snps
+	--recode
+	--transpose
+	--out ceu
+
+Reading map (extended format) from [ ceu_chr6.bim ] 
+93635 markers to be included from [ ceu_chr6.bim ]
+Reading pedigree information from [ ceu_chr6.fam ] 
+112 individuals read from [ ceu_chr6.fam ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 112 missing
+57 males, 55 females, and 0 of unspecified sex
+Reading genotype bitfile from [ ceu_chr6.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Reading list of SNPs to extract [ snps ] ... 10 read
+Before frequency and genotyping pruning, there are 10 SNPs
+112 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.99375
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 10 SNPs
+After filtering, 0 cases, 0 controls and 112 missing
+After filtering, 57 males, 55 females, and 0 of unspecified sex
+Writing transposed ped file to [ ceu.tped ] 
+Writing family information to [ ceu.tfam ] 
+
+Analysis finished: Thu Nov 12 14:41:41 2015
+
