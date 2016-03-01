@@ -6,8 +6,6 @@
 package quantld;
 
 import java.io.IOException;
-import java.util.Arrays;
-import org.apache.commons.math3.linear.*;
 
 /**
  *
@@ -16,6 +14,21 @@ import org.apache.commons.math3.linear.*;
 public class Test {
     private double tol = 0.001;
     private int maxItr = 1000;
+    
+    final double pa[][] = {
+            {0.80, 0.25, 0.28, 0.17, 0.52},
+            {0.10, 0.13, 0.64, 0.03, 0.01},
+            {0.18, 0.28, 0.90, 0.52, 0.07},
+            {0.01, 0.37, 0.57, 0.36, 0.94},
+            {0.97, 0.13, 0.28, 0.64, 0.29},
+        };
+    final double pb[][] = {
+            {0.06, 0.29, 0.12, 0.24, 0.57},
+            {0.44, 0.95, 0.37, 0.03, 0.44},
+            {0.28, 0.64, 0.22, 0.54, 0.11},
+            {1.00, 0.16, 0.07, 0.44, 0.42},
+            {0.98, 0.38, 0.02, 0.99, 0.25}
+        };
     
     public Test(){
     }
@@ -90,39 +103,44 @@ public class Test {
         System.out.println();
     }
     
-    void testMatrix(){
-        double[][] a = {{1.44, 1.69, 2.25},{1.69, 6.25,1.21},{2.25,1.21,1.96}};
-        double[][] b = {{1.44, 1.69, 2.25},{1.69, 6.25,1.21},{2.25,1.21,1.96}};
-        Array2DRowRealMatrix ma = new Array2DRowRealMatrix(a);
-        Array2DRowRealMatrix mb = new Array2DRowRealMatrix(b);
-        System.out.println("matrix is:" + ma);
-        System.out.println("Row Dimension is: " + ma.getRowDimension());    // 3
-        System.out.println("Column Dimension is: " + mb.getColumnDimension()); // 3
-        System.out.println("it is square matrix! : " + ma.isSquare());
-        System.out.println("ma + mb = " + ma.add(mb));
-        System.out.println("ma + 5 = " + ma.scalarAdd(5.0));
-        // matrix sub
-        System.out.println("ma - mb = " + ma.subtract(mb));
-        // matrix norm
-        System.out.println("the maximum absolute row sum norm is " + ma.getNorm());
-        // matrix multiply
-        System.out.println("ma * mb = " + ma.multiply(mb));
-        System.out.println("ma * 5.0 = " + ma.scalarMultiply(5));
-        System.out.println("mb * ma = " + ma.preMultiply(mb));
-        // matrix trace
-        System.out.println("the trace is " + ma.getTrace());
-        // matrix transpose
-        System.out.println("the transpose of mat1 is " + ma.transpose());
-        // matrix to vector
-        System.out.println("the first row vector is " + ma.getRowVector(0));
-        // matrix get sub matrix of selected rows and columns
-        System.out.println("sub matrix of ma is " + ma.getSubMatrix(new int[] { 0, 2 }, new int[] { 1, 2 }));
-        // Eigenvalues/eigenvectors
-        EigenDecomposition ed = new EigenDecomposition(ma);
-        double[] re = ed.getRealEigenvalues();
-        System.out.println("Eigen values are " + Arrays.toString(re));
-        Eigen eig = new Eigen();
-        Array2DRowRealMatrix v = eig.getEigenvectors(ma);
-        System.out.println("Eigen vectors are " + v);
+    void testMatrixT(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("T statistic: " + jm.calTstatistic(a, b));
     }
+    
+    void testMatrixTP(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("T percent: " + jm.calTpercent(a, b));
+    }
+    
+    void testMatrixEig(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("varLD between a and b is: " + jm.calTraceDiffEigValue(a, b));
+    }   
+    
+    void testMatrixCAD(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("Canberra distance: " + jm.canberraDistance(a, b));
+    }
+    
+    void testMatrixMAD(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("Manhattan distance: " + jm.manhattanDistance(a, b));
+    }
+    
+    void testMatrixEUD(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("Euclidean distance: " + jm.euclideanDistance(a, b));
+    }
+    
+    void testMatrixCSD(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("Chebyshev distance: " + jm.chebyshevDistance(a, b));
+    }
+    
+    void testMatrixBCD(double[][] a, double[][] b){
+        JMatrix jm = new JMatrix();
+        System.out.println("Bray-Curtis dissimilarity: " + jm.brayCurtisDistance(a, b));
+    }
+    
 }

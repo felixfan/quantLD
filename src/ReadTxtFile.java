@@ -120,6 +120,43 @@ public class ReadTxtFile {
         return dat;
     }
     
+    public double[] readPos(String fileName, int winSize) throws IOException{
+        BufferedReader bf = null;
+        String lineContent;
+        int i = 0;
+        int n = countLines(fileName);
+        String dat[] = new String[n];
+        try{
+            bf = new BufferedReader(new FileReader(fileName));
+            while((lineContent = bf.readLine())!= null){
+                String str[] = lineContent.split("\\s+"); // split by white spaces
+                dat[i] = str[3];
+                i++;
+            }
+        }catch (FileNotFoundException e){
+            e.printStackTrace(System.out);
+        }catch(IOException e){
+            e.printStackTrace(System.out);
+        }finally{
+            if(bf != null){
+                bf.close();
+            }
+        }
+        int l = n - winSize + 1;
+        double[] pos = new double[l];
+        int m = winSize / 2;
+        if(winSize % 2 == 1){
+            for(int j=0;j<l;j++){
+                pos[j] = Double.parseDouble(dat[m + j]);
+            }
+        }else{
+            for(int j=0;j<l;j++){
+                pos[j] = (Double.parseDouble(dat[m + j -1])+Double.parseDouble(dat[m + j]))/2.0;
+            }
+        }
+        return pos;
+    }
+    
     /**
      * read lines between "start" and "end" of tped file to a two-dimension array
      * @param fileName file in PLINK tped format

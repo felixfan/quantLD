@@ -10,28 +10,20 @@ package quantld;
  *
  * @author Felix Yanhui Fan felixfanyh@gmail.com
  */
-public class CalLD {
-    private double tol;
-    private int maxItr;
-    
-    // default value
-    {
-        tol = 0.001;
-        maxItr = 1000;
-    }
-    
+public class CalLD extends EM {   
     public CalLD(){
     }
     
     public CalLD(double tol,int maxItr){
-        this.tol = tol;
-        this.maxItr = maxItr;
+        super.tol = tol;
+        super.maxItr = maxItr;
     }
     
-    private final EM em = new EM(tol, maxItr);
-    
     public double[][][] CalRDprime(int[][] genoCode, int windowSize, String ldMeasure){   
-        
+        if(genoCode.length < windowSize){
+            System.out.println("\nError: window size is too large for your dataset");
+            System.exit(99);
+        }
         // total number of windows
         int totWindows = genoCode.length - windowSize + 1;
         
@@ -47,17 +39,17 @@ public class CalLD {
                 }else if(i<j){ // upright matrix
                     switch (ldMeasure) {
                         case "r2":
-                            rSquares[0][i][j] = em.esemR2(genoCode[i],genoCode[j]);
+                            rSquares[0][i][j] = esemR2(genoCode[i],genoCode[j]);
                             break;
                         case "dp":
-                            rSquares[0][i][j] = em.esemDprime(genoCode[i],genoCode[j]);
+                            rSquares[0][i][j] = esemDprime(genoCode[i],genoCode[j]);
                             break;
                         case "sr2":
-                            rSquares[0][i][j] = em.esemSignedR2(genoCode[i],genoCode[j]);
+                            rSquares[0][i][j] = esemSignedR2(genoCode[i],genoCode[j]);
                             break;
                         default:
                             System.out.println("--ld-measure only support r2, dp or sr2");
-                            System.exit(0);
+                            System.exit(1);
                     } 
                 }else{ // bottom left matrix 
                     rSquares[0][i][j] = rSquares[0][j][i];
@@ -75,17 +67,17 @@ public class CalLD {
                         if(i<j){// upright matrix, last column
                             switch (ldMeasure) {
                                 case "r2":
-                                    rSquares[n][i][j] = em.esemR2(genoCode[n+i],genoCode[n+j]);
+                                    rSquares[n][i][j] = esemR2(genoCode[n+i],genoCode[n+j]);
                                     break;
                                 case "dp":
-                                    rSquares[n][i][j] = em.esemDprime(genoCode[n+i],genoCode[n+j]);
+                                    rSquares[n][i][j] = esemDprime(genoCode[n+i],genoCode[n+j]);
                                     break;
                                 case "sr2":
-                                    rSquares[n][i][j] = em.esemSignedR2(genoCode[n+i],genoCode[n+j]);
+                                    rSquares[n][i][j] = esemSignedR2(genoCode[n+i],genoCode[n+j]);
                                     break;
                                 default:
                                     System.out.println("--ld-measure only support r2, dp or sr2");
-                                    System.exit(0);
+                                    System.exit(1);
                             }
                         }else if(i==j){
                             rSquares[n][i][j] = 1;

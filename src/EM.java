@@ -9,9 +9,9 @@ package quantld;
  *
  * @author Felix Yanhui Fan felixfanyh@gmail.com
  */
-public class EM {
-    private double tol; // Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
-    private int maxItr; // 
+public class EM{
+    protected double tol; // Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+    protected int maxItr; // 
     
     // default value
     {

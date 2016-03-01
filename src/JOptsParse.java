@@ -15,7 +15,7 @@ import java.util.HashMap;
 import org.apache.commons.cli.*;
 
 public class JOptsParse {
-    private final String packageVersion = "0.1";
+    private final String packageVersion = "0.1.1";
     
     private void printHelp(Options opts) {  
         HelpFormatter hf = new HelpFormatter();  
@@ -41,9 +41,12 @@ public class JOptsParse {
         // add other options
         options.addOption("f", "first-tped", true, "first input genotype file, required");
         options.addOption("s", "second-tped", true, "second input genotype file, required");
-        options.addOption("t", "tolerance", true, "convergence tolerance, default 0.001");
+        options.addOption("T", "tolerance", true, "convergence tolerance, default 0.001");
         options.addOption("i", "max-iteration", true, "maximum number of EM steps, default 1000");
         options.addOption("m", "ld-measure", true, "LD measure, default r2");
+        options.addOption("w", "win-size", true, "window size, default 50");
+        options.addOption("t", "test", true, "method to measure distance, default evd");
+        options.addOption("o", "out", true, "output file name, default output.txt");
         
         //Parsing the command line arguments
         CommandLineParser parser = new DefaultParser();
@@ -74,6 +77,18 @@ public class JOptsParse {
             if(cmd.hasOption("i")){
                 String tmp = cmd.getOptionValue("i");
                 params.put("i", tmp);
+            }
+            if(cmd.hasOption("w")){
+                String tmp = cmd.getOptionValue("w");
+                params.put("w", tmp);
+            }
+            if(cmd.hasOption("o")){
+                String tmp = cmd.getOptionValue("o");
+                params.put("o", tmp);
+            }
+            if(cmd.hasOption("T")){
+                String tmp = cmd.getOptionValue("T");
+                params.put("T", tmp);
             }
         }
      
