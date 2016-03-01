@@ -1,7 +1,0 @@
-pop1	pop2	position	raw_score
-pop1.txt	pop2.txt	3.00	0.0490
-pop1.txt	pop2.txt	4.00	0.1107
-pop1.txt	pop2.txt	5.00	0.1811
-pop1.txt	pop2.txt	6.00	0.1269
-pop1.txt	pop2.txt	7.00	0.1142
-pop1.txt	pop2.txt	8.00	0.1373
