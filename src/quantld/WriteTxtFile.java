@@ -6,9 +6,14 @@
 
 package quantld;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,6 +21,7 @@ import java.io.IOException;
  */
 public class WriteTxtFile extends BatchLD {
     private final ReadTxtFile rtf = new ReadTxtFile();
+    private final int nrow = 10000;
     
     public void outputTxt(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr) throws IOException{   
         File outfile = new File(outName);
@@ -38,10 +44,87 @@ public class WriteTxtFile extends BatchLD {
             fop.close();
         }catch(IOException e){
             e.printStackTrace(System.out);
+        } 
+    }
+    
+    public void outputTxt(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr) throws IOException{   
+        File outfile = new File(outName);
+
+        double[] ans = batchQuantLD(fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
+        double[] pos = rtf.readPos(fileName1, winSize, start, end);
+        int n = ans.length;
+        try(FileOutputStream fop = new FileOutputStream(outfile)){
+            if(!outfile.exists()){
+                outfile.createNewFile();
+            }
+            
+            for(int i=0; i<n;i++){
+                String tmp = pos[i] + "\t" + ans[i] + "\n";
+                byte[] contentInBytes = tmp.getBytes();
+                fop.write(contentInBytes);
+                fop.flush();               
+            }
+            
+            fop.close();
+        }catch(IOException e){
+            e.printStackTrace(System.out);
+        } 
+    }
+    
+    private void mergeTxtFiles(List<String> files, String outfile) throws FileNotFoundException, IOException{
+        try (FileOutputStream fop = new FileOutputStream(outfile)) {
+            BufferedReader bf;
+            String line;
+            for(String f : files){
+                bf = new BufferedReader(new FileReader(f));
+                while((line = bf.readLine())!= null){
+                    byte[] contentInBytes = line.getBytes();
+                    fop.write(contentInBytes);
+                    fop.flush();               
+                }
+            }
         }
-        
-        
-        
-        
+    }
+    
+    private void deleteTxtFiles(List<String> files){
+        for(String f : files){
+            File t = new File(f);
+            t.delete(); 
+        }
+    }
+    
+    public void runQuantLD(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr) throws IOException{
+        int n = rtf.countLines(fileName1);
+        if(n < nrow){
+            outputTxt(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);
+        }else{
+            int totlen = n + winSize -1;
+            int totsplit = 1;
+            if(totlen % nrow == 0){
+                totsplit = (n + winSize - 1) / nrow;
+            }else{
+                totsplit = (n + winSize - 1) / nrow + 1;
+            }
+            int start = 1;
+            int end = nrow;
+            String tmpname = "tmp0";
+            outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
+            for(int i=1;i<totsplit;i++){
+                tmpname = "tmp" + i;
+                start = end - winSize + 2;
+                end = start + nrow - 1;
+                if(end > n){
+                    end = n;
+                }
+                outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
+            }
+ 
+            List<String> fileList = new ArrayList<>();
+            for(int i=0; i<totsplit;i++){
+                fileList.add("tmp"+i);
+            }
+            mergeTxtFiles(fileList,outName);
+            deleteTxtFiles(fileList);
+        }
     }
 }

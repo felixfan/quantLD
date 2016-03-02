@@ -80,7 +80,7 @@ public class QuantLD {
         
         // printout program
         System.out.println( "@-------------------------------------------------------------@");
-        System.out.println( "|       quantLD       |     v0.1.1      |     1 Mar 2016      |");
+        System.out.println( "|       quantLD       |    v0.1.0302    |     2 Mar 2016      |");
         System.out.println( "|-------------------------------------------------------------|");
         System.out.println( "|  (C) 2016 Felix Yanhui Fan, GNU General Public License, v2  |");
         System.out.println( "|-------------------------------------------------------------|");
@@ -131,6 +131,10 @@ public class QuantLD {
                 */
         
         WriteTxtFile wtf = new WriteTxtFile();
-        wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr);
+        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr);
+        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 1, 10, tol, maxItr);
+        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 1, 7, tol, maxItr);
+        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 4, 10, tol, maxItr);
+        wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr);
     } 
 }

@@ -16,9 +16,9 @@ import Jama.Matrix;
 public class JMatrix extends CalLD {
     /**
      * calculate T statistic
-     * @param a
-     * @param b
-     * @return 
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return T statistic
      */
     protected double calTstatistic(double[][] a, double[][] b){
         double t = 0.0;
@@ -33,9 +33,9 @@ public class JMatrix extends CalLD {
     
     /**
      * calculate T% statistic
-     * @param a
-     * @param b
-     * @return 
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return T percent
      */
     protected double calTpercent(double[][] a, double[][] b){
         double m = 0.0;
@@ -53,9 +53,9 @@ public class JMatrix extends CalLD {
     
     /**
      * varLD statistic
-     * @param a
-     * @param b
-     * @return 
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return trace of eigenvalue difference
      */
     protected double calTraceDiffEigValue(double[][] a, double[][] b){
         Matrix M = new Matrix(a);
@@ -77,6 +77,12 @@ public class JMatrix extends CalLD {
         return ev;
     }
     
+    /**
+     * calculate Canberra distance
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return Canberra distance
+     */
     protected double canberraDistance(double[][] a, double[][] b){
         double cad = 0.0;
         int n = a.length;
@@ -88,6 +94,13 @@ public class JMatrix extends CalLD {
         return cad;
     }
     
+    /**
+     * calculate Minkowski Distance
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @param k order
+     * @return Minkowski Distance
+     */
     protected double minkowskiDistance(double[][] a, double[][] b, double k){
         double mkd = 0.0;
         int n = a.length;
@@ -100,14 +113,32 @@ public class JMatrix extends CalLD {
         return mkd;
     }
     
+    /**
+     * calculate Manhattan Distance
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return Manhattan Distance
+     */
     protected double manhattanDistance(double[][] a, double[][] b){
         return minkowskiDistance(a,b,1);
     }
     
+    /**
+     * calculate Euclidean Distance
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return Euclidean Distance
+     */
     protected double euclideanDistance(double[][] a, double[][] b){
         return minkowskiDistance(a,b,2);
     }
     
+    /**
+     * calculate Chebyshev Distance
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return Chebyshev Distance
+     */
     protected double chebyshevDistance(double[][] a, double[][] b){
         double mkd = 0.0;
         int n = a.length;
@@ -122,6 +153,12 @@ public class JMatrix extends CalLD {
         return mkd;
     }
     
+    /**
+     * calculate Bray-Curtis Dissimilarity
+     * @param a LD measure matrix of the first population
+     * @param b LD measure matrix of the second population
+     * @return Bray-Curtis Dissimilarity
+     */
     protected double brayCurtisDistance(double[][] a, double[][] b){
         double bcd = 0.0;
         int n = a.length;

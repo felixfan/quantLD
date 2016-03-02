@@ -19,6 +19,13 @@ public class CalLD extends EM {
         super.maxItr = maxItr;
     }
     
+    /**
+     * calculate LD matrix
+     * @param genoCode is 2D array of genotype codes
+     * @param windowSize size of window
+     * @param ldMeasure LD measures, r2, dp, sr2
+     * @return matrix of LD measure for all windows
+     */
     public double[][][] CalRDprime(int[][] genoCode, int windowSize, String ldMeasure){   
         if(genoCode.length < windowSize){
             System.out.println("\nError: window size is too large for your dataset");
@@ -27,7 +34,7 @@ public class CalLD extends EM {
         // total number of windows
         int totWindows = genoCode.length - windowSize + 1;
         
-        // output, r2 or D prime, each window has a r2 matrix
+        // output, r2 or D prime, each window has a matrix
         double[][][] rSquares = new double[totWindows][windowSize][windowSize];
         
         // calculate r2 or D prime for each window

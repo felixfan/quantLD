@@ -18,7 +18,7 @@ public class ReadTxtFile {
      * @return number of lines in tped file
      * @throws java.io.IOException
     */
-    private int countLines(String fileName) throws IOException{
+    public int countLines(String fileName) throws IOException{
         BufferedReader bf = null;
         String lineContent = null;
         int n = 0;
@@ -120,6 +120,50 @@ public class ReadTxtFile {
         return dat;
     }
     
+    /**
+     * read lines between "start" and "end" of tped file to a two-dimension array
+     * @param fileName file in PLINK tped format
+     * @param start line to start read
+     * @param end line to end read
+     * @return a two-dimension array
+     * @throws java.io.IOException
+    */
+    private String[][] readTpedFile(String fileName, int start, int end) throws IOException{
+        BufferedReader bf = null;
+        String lineContent;
+        int i = 0;
+        int l = 0;
+        String dat[][] = new String[end-start+1][];
+        try{
+            bf = new BufferedReader(new FileReader(fileName));
+            while((lineContent = bf.readLine())!= null){
+                i++;
+                if(i >= start && i <= end){
+                    String str[] = lineContent.split("\\s+"); // split by white spaces
+                    dat[l] = new String[str.length];
+                    dat[l] = str;
+                    l++;
+                }
+            }
+        }catch (FileNotFoundException e){
+            e.printStackTrace(System.out);
+        }catch(IOException e){
+            e.printStackTrace(System.out);
+        }finally{
+            if(bf != null){
+                bf.close();
+            }
+        }
+        return dat;
+    }
+    
+    /**
+     * get the position information for the output
+     * @param fileName file in PLINK tped format
+     * @param winSize size of each window
+     * @return array of positions
+     * @throws IOException 
+     */
     public double[] readPos(String fileName, int winSize) throws IOException{
         BufferedReader bf = null;
         String lineContent;
@@ -158,29 +202,29 @@ public class ReadTxtFile {
     }
     
     /**
-     * read lines between "start" and "end" of tped file to a two-dimension array
+     * get the position information from start to end for the output
      * @param fileName file in PLINK tped format
-     * @param start line to start read
-     * @param end line to end read
-     * @return a two-dimension array
-     * @throws java.io.IOException
-    */
-    private String[][] readTpedFile(String fileName, int start, int end) throws IOException{
+     * @param winSize size of each window
+     * @param start row to start read
+     * @param end row to end read
+     * @return array of positions
+     * @throws IOException 
+     */
+    public double[] readPos(String fileName, int winSize, int start, int end) throws IOException{
         BufferedReader bf = null;
         String lineContent;
         int i = 0;
-        int l = 0;
+        int k = 0;
         int n = countLines(fileName);
-        String dat[][] = new String[n][];
+        String dat[] = new String[n];
         try{
             bf = new BufferedReader(new FileReader(fileName));
             while((lineContent = bf.readLine())!= null){
                 i++;
                 if(i >= start && i <= end){
                     String str[] = lineContent.split("\\s+"); // split by white spaces
-                    dat[l] = new String[str.length];
-                    dat[l] = str;
-                    l++;
+                    dat[k] = str[3];
+                    k++;
                 }
             }
         }catch (FileNotFoundException e){
@@ -192,7 +236,19 @@ public class ReadTxtFile {
                 bf.close();
             }
         }
-        return dat;
+        int l = end - start - winSize + 2;
+        double[] pos = new double[l];
+        int m = winSize / 2;
+        if(winSize % 2 == 1){
+            for(int j=0;j<l;j++){
+                pos[j] = Double.parseDouble(dat[m + j]);
+            }
+        }else{
+            for(int j=0;j<l;j++){
+                pos[j] = (Double.parseDouble(dat[m + j -1])+Double.parseDouble(dat[m + j]))/2.0;
+            }
+        }
+        return pos;
     }
     
     /**
