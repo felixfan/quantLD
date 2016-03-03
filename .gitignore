@@ -30,6 +30,7 @@ nbproject/
 dist/
 build/
 testData/
+store/
 *.xml
 *.mf
 
