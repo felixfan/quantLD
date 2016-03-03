@@ -57,6 +57,9 @@ public class QuantLD {
         if(params.containsKey("o")){
             output = params.get("o");
         }
+        if(params.containsKey("n")){
+            nrow = Integer.parseInt(params.get("n"));
+        }
         // check parameters
         String[] ldMeasures = new String[]{"r2","dp","sr2"};
         if(!Arrays.asList(ldMeasures).contains(ldMeasure)){

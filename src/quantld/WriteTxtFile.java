@@ -146,7 +146,7 @@ public class WriteTxtFile extends BatchLD {
      */
     public void runQuantLD(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int nrow) throws IOException{
         int n = rtf.countLines(fileName1);
-        if(n < nrow){
+        if(n <= nrow){
             outputTxt(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);
         }else{
             int totlen = n + winSize -1;
