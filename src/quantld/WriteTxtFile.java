@@ -44,12 +44,12 @@ public class WriteTxtFile extends BatchLD {
             if(!outfile.exists()){
                 outfile.createNewFile();
             }
-            
+                        
             for(int i=0; i<n;i++){
                 String tmp = pos[i] + "\t" + ans[i] + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
-                fop.flush();               
+                fop.flush(); 
             }
             
             fop.close();
@@ -87,9 +87,9 @@ public class WriteTxtFile extends BatchLD {
                 String tmp = pos[i] + "\t" + ans[i] + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
-                fop.flush();               
+                fop.flush();
             }
-            
+
             fop.close();
         }catch(IOException e){
             e.printStackTrace(System.out);
@@ -112,10 +112,12 @@ public class WriteTxtFile extends BatchLD {
                 while((line = bf.readLine())!= null){
                     byte[] contentInBytes = line.getBytes();
                     fop.write(contentInBytes);
+                    fop.write(System.getProperty("line.separator").getBytes());
                     fop.flush();               
                 }
             }
-        }
+            fop.close();
+        }       
     }
     
     /**
