@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.commons.cli.ParseException;
+import java.util.Date;
 
 
 /**
@@ -24,6 +25,7 @@ public class QuantLD {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws ParseException, IOException {
+        long startTime = System.currentTimeMillis();
         JOptsParse jop = new JOptsParse();
         HashMap<String, String> params = jop.getOpt(args);
         
@@ -140,5 +142,12 @@ public class QuantLD {
         //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 1, 7, tol, maxItr);
         //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 4, 10, tol, maxItr);
         wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr,nrow);
+        
+        long endTime = System.currentTimeMillis();
+        long diffTime = endTime - startTime;
+        System.out.print("Time used: ");
+        wtf.miSecToHourMinSec(diffTime);
+        Date cdate = new Date();
+        System.out.println("Analysis finished: " + cdate);
     } 
 }

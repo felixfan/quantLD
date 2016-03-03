@@ -178,4 +178,17 @@ public class WriteTxtFile extends BatchLD {
             deleteTxtFiles(fileList);
         }
     }
+    
+    public void miSecToHourMinSec(long miSec){
+        long diffSeconds = (miSec / 1000) % 60;  
+        long diffMinutes = (miSec / 1000 / 60) % 60; 
+        long diffHours = (miSec / 1000 / 60 / 60) % 60;
+        if(diffHours > 0){
+            System.out.print(diffHours + " hours, ");
+        }
+        if(diffMinutes > 0){
+            System.out.print(diffMinutes + " minutes, ");
+        }
+        System.out.println(diffSeconds + " seconds");
+    }
 }
