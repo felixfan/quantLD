@@ -98,6 +98,17 @@ public class QuantLD {
         
         // printout parameters
         System.out.println();
+        System.out.println("\t" + "--first-tped " + fileName1);
+        System.out.println("\t" + "--second-tped " + fileName2);
+        System.out.println("\t" + "--win-size " + winSize);
+        System.out.println("\t" + "--ld-measure " + ldMeasure);
+        System.out.println("\t" + "--test " + tDist);
+        System.out.println("\t" + "--max-iteration " + maxItr);
+        System.out.println("\t" + "--tolerance " + tol);
+        System.out.println("\t" + "--nrow " + nrow);
+        System.out.println("\t" + "--out " + output);
+        
+        System.out.println();
         System.out.println("first input genotype file: " + fileName1);
         System.out.println("second input genotype file: " + fileName2);
         System.out.println("window size: " + winSize);
@@ -105,6 +116,7 @@ public class QuantLD {
         System.out.println("Measure of Distance: " + tDist);
         System.out.println("maximum number of EM steps: " + maxItr);
         System.out.println("convergence tolerance: " + tol);
+        System.out.println("number of rows: " + nrow);
         System.out.println("output: " + output);
         System.out.println();
         

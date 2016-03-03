@@ -141,7 +141,7 @@ public class WriteTxtFile extends BatchLD {
      * @param ldMeasure LD measures, r2, dp, sr2
      * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
      * @param maxItr maximum iterate
-     * @param nrow rows to read for each time
+     * @param nrow read how many rows each time
      * @throws IOException 
      */
     public void runQuantLD(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int nrow) throws IOException{
