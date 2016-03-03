@@ -120,16 +120,11 @@ public class EM {
     /**
      * Excoffier-Slatkin EM algorithm for estimating haplotype frequencies.
      *
-     * @param gf is array of genotype values at 1st locus, coded as 0, 1, and 2
-     * to represent genotypes AA, Aa, and aa.
-     * @param gs is the corresponding array for 2nd locus, coded as 0, 1, and 2
-     * to represent genotypes BB, Bb, and bb.
-     * @param h holds haplotype frequencies. Initialized as {0.25, 0.25, 0.25,
-     * 0.25}
-     * @param tol controls convergence. Algorithm stops when sum of absolute
-     * differences between new and old haplotype frequencies is <= tol.
-     * @
-     * param maxItr maximum iterate
+     * @param gf is array of genotype values at 1st locus, coded as 0, 1, and 2 to represent genotypes AA, Aa, and aa.
+     * @param gs is the corresponding array for 2nd locus, coded as 0, 1, and 2 to represent genotypes BB, Bb, and bb.
+     * @param h holds haplotype frequencies. Initialized as 0.25, 0.25, 0.25, 0.25
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
+     * @param maxItr maximum iterate
      * @return a array of 4 haplotype frequencies.
      */
     private double[] esem(int[] gf, int[] gs, double[] h, double tol, int maxItr) {

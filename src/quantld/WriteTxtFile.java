@@ -23,6 +23,18 @@ public class WriteTxtFile extends BatchLD {
     private final ReadTxtFile rtf = new ReadTxtFile();
     private final int nrow = 10000;
     
+    /**
+     * write output to a file
+     * @param outName output file name
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @param method method to measure matrix distance
+     * @param winSize size of each window
+     * @param ldMeasure LD measures, r2, dp, sr2
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param maxItr maximum iterate
+     * @throws IOException 
+     */
     public void outputTxt(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr) throws IOException{   
         File outfile = new File(outName);
 
@@ -47,6 +59,20 @@ public class WriteTxtFile extends BatchLD {
         } 
     }
     
+    /**
+     * write output to a file
+     * @param outName output file name
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @param method method to measure matrix distance
+     * @param winSize size of each window
+     * @param ldMeasure LD measures, r2, dp, sr2
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param maxItr maximum iterate
+     * @param start row to start read
+     * @param end row to end read
+     * @throws IOException 
+     */
     public void outputTxt(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr) throws IOException{   
         File outfile = new File(outName);
 
@@ -71,6 +97,13 @@ public class WriteTxtFile extends BatchLD {
         } 
     }
     
+    /**
+     * cat multiple files to a file
+     * @param files list of file names
+     * @param outfile output file name
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     private void mergeTxtFiles(List<String> files, String outfile) throws FileNotFoundException, IOException{
         try (FileOutputStream fop = new FileOutputStream(outfile)) {
             BufferedReader bf;
@@ -86,6 +119,10 @@ public class WriteTxtFile extends BatchLD {
         }
     }
     
+    /**
+     * delete list of files
+     * @param files list of file names
+     */
     private void deleteTxtFiles(List<String> files){
         for(String f : files){
             File t = new File(f);
@@ -93,13 +130,25 @@ public class WriteTxtFile extends BatchLD {
         }
     }
     
+    /**
+     * run quantLD block by block
+     * @param outName output file name
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @param method method to measure matrix distance
+     * @param winSize size of each window
+     * @param ldMeasure LD measures, r2, dp, sr2
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param maxItr maximum iterate
+     * @throws IOException 
+     */
     public void runQuantLD(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr) throws IOException{
         int n = rtf.countLines(fileName1);
         if(n < nrow){
             outputTxt(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);
         }else{
             int totlen = n + winSize -1;
-            int totsplit = 1;
+            int totsplit;
             if(totlen % nrow == 0){
                 totsplit = (n + winSize - 1) / nrow;
             }else{
