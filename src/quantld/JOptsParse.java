@@ -47,7 +47,7 @@ public class JOptsParse {
         options.addOption("w", "win-size", true, "window size, default 50");
         options.addOption("t", "test", true, "method to measure distance, default evd");
         options.addOption("o", "out", true, "output file name, default output.txt");
-        options.addOption("n", "nrow", true, "rows to read for each time, default 1000");
+        options.addOption("n", "nrow", true, "rows to read for each time, default 10000");
         
         //Parsing the command line arguments
         CommandLineParser parser = new DefaultParser();

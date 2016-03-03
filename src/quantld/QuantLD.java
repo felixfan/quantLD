@@ -39,7 +39,7 @@ public class QuantLD {
         int winSize = 50;
         String tDist = "evd";
         String output = "output.txt";
-        int nrow = 1000;
+        int nrow = 10000;
         
         if(params.containsKey("T")){
             tol = Double.parseDouble(params.get("T"));
@@ -86,7 +86,7 @@ public class QuantLD {
         
         // printout program
         System.out.println( "@-------------------------------------------------------------@");
-        System.out.println( "|       quantLD       |    v0.1.0302    |     2 Mar 2016      |");
+        System.out.println( "|       quantLD       |    v0.1.0303    |     3 Mar 2016      |");
         System.out.println( "|-------------------------------------------------------------|");
         System.out.println( "|  (C) 2016 Felix Yanhui Fan, GNU General Public License, v2  |");
         System.out.println( "|-------------------------------------------------------------|");
@@ -108,39 +108,7 @@ public class QuantLD {
         System.out.println("output: " + output);
         System.out.println();
         
-        //Test mytest = new Test(tol, maxItr);
-        //mytest.testRecoding(fileName1); // passed
-        //mytest.testEM();                // passed
-        //mytest.testCalLD(fileName1, ldMeasure); // passed
-        //mytest.testMatrix();                   // passed
-        
-        //mytest.testMatrixT(mytest.pa, mytest.pb);    // passed
-        //mytest.testMatrixTP(mytest.pa, mytest.pb);  // passed
-        // mytest.testMatrixEig(mytest.pa, mytest.pb);
-        //mytest.testMatrixCAD(mytest.pa, mytest.pb);   // passed
-        //mytest.testMatrixMAD(mytest.pa, mytest.pb);   // passed
-        //mytest.testMatrixEUD(mytest.pa, mytest.pb);   // passed
-        //mytest.testMatrixCSD(mytest.pa, mytest.pb);    // passed
-        //mytest.testMatrixBCD(mytest.pa, mytest.pb);  // passed
-        
-        /*
-        BatchLD bld = new BatchLD();
-        ReadTxtFile rtf = new ReadTxtFile();
-        double[] ans = bld.batchQuantLD(fileName1, fileName2, "evd", winSize, ldMeasure, tol, maxItr);
-        double[] pos = rtf.readPos(fileName1, winSize);
-        int n = ans.length;
-        for(int i=0; i<n;i++){
-            System.out.print(pos[i]);
-            System.out.print("\t");
-            System.out.println(ans[i]);
-        }
-                */
-        
         WriteTxtFile wtf = new WriteTxtFile();
-        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr);
-        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 1, 10, tol, maxItr);
-        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 1, 7, tol, maxItr);
-        //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 4, 10, tol, maxItr);
         wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr,nrow);
         
         long endTime = System.currentTimeMillis();
