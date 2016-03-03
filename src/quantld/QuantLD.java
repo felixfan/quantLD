@@ -37,6 +37,7 @@ public class QuantLD {
         int winSize = 50;
         String tDist = "evd";
         String output = "output.txt";
+        int nrow = 1000;
         
         if(params.containsKey("T")){
             tol = Double.parseDouble(params.get("T"));
@@ -135,6 +136,6 @@ public class QuantLD {
         //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 1, 10, tol, maxItr);
         //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 1, 7, tol, maxItr);
         //wtf.outputTxt(output, fileName1, fileName2, tDist, winSize, ldMeasure, 4, 10, tol, maxItr);
-        wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr);
+        wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr,nrow);
     } 
 }
