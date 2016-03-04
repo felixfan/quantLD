@@ -179,6 +179,10 @@ public class WriteTxtFile extends BatchLD {
         }
     }
     
+    /**
+     * convert milliseconds to hours, minutes and seconds
+     * @param miSec milliseconds
+     */
     public void miSecToHourMinSec(long miSec){
         long diffSeconds = (miSec / 1000) % 60;  
         long diffMinutes = (miSec / 1000 / 60) % 60; 

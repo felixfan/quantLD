@@ -15,7 +15,7 @@ import java.util.HashMap;
 import org.apache.commons.cli.*;
 
 public class JOptsParse {
-    private final String packageVersion = "0.1.0303";
+    private final String packageVersion = "0.1.0304";
     
     private void printHelp(Options opts) {  
         HelpFormatter hf = new HelpFormatter();  
