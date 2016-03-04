@@ -33,6 +33,7 @@ testData/
 store/
 *.xml
 *.mf
+*.jar
 
 # Icon must ends with two \r.
 Icon
