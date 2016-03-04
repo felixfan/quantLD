@@ -20,10 +20,10 @@ public class BatchLD extends JMatrix {
      * @param method method to measure matrix distance
      * @param winSize size of each window
      * @param ldMeasure LD measures, r2, dp, sr2
-     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
      * @param maxItr maximum iterate
      * @return array of matrix distance
-     * @throws IOException 
+     * @throws IOException can not open input file
      */
     public double[] batchQuantLD(String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr) throws IOException{
         ReadTxtFile rtf = new ReadTxtFile();
@@ -76,12 +76,12 @@ public class BatchLD extends JMatrix {
      * @param method method to measure matrix distance
      * @param winSize size of each window
      * @param ldMeasure LD measures, r2, dp, sr2
-     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
      * @param maxItr maximum iterate
      * @param start row to start read
      * @param end row to end read
      * @return array of matrix distance
-     * @throws IOException 
+     * @throws IOException can not open input file
      */
     public double[] batchQuantLD(String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr) throws IOException{
         ReadTxtFile rtf = new ReadTxtFile();

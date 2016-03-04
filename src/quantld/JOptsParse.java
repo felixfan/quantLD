@@ -25,8 +25,8 @@ public class JOptsParse {
     /**
      * command line processing by using Apache Commons CLI
      * @param args arguments array from main()
-     * @return HashMap<String, String> of options
-     * @throws ParseException 
+     * @return HashMap of options
+     * @throws ParseException can not parse opts
      */
     public HashMap<String, String> getOpt(String[] args) throws ParseException{
         HashMap<String, String> params = new HashMap<>();

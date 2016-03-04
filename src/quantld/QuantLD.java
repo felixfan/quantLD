@@ -21,8 +21,8 @@ public class QuantLD {
 
     /**
      * @param args the command line arguments
-     * @throws org.apache.commons.cli.ParseException
-     * @throws java.io.IOException
+     * @throws org.apache.commons.cli.ParseException can not parse opts
+     * @throws java.io.IOException can not open input file
      */
     public static void main(String[] args) throws ParseException, IOException {
         long startTime = System.currentTimeMillis();

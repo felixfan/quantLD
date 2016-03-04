@@ -30,9 +30,9 @@ public class WriteTxtFile extends BatchLD {
      * @param method method to measure matrix distance
      * @param winSize size of each window
      * @param ldMeasure LD measures, r2, dp, sr2
-     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
      * @param maxItr maximum iterate
-     * @throws IOException 
+     * @throws IOException can not open file
      */
     public void outputTxt(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr) throws IOException{   
         File outfile = new File(outName);
@@ -66,11 +66,11 @@ public class WriteTxtFile extends BatchLD {
      * @param method method to measure matrix distance
      * @param winSize size of each window
      * @param ldMeasure LD measures, r2, dp, sr2
-     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
      * @param maxItr maximum iterate
      * @param start row to start read
      * @param end row to end read
-     * @throws IOException 
+     * @throws IOException can not open file
      */
     public void outputTxt(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr) throws IOException{   
         File outfile = new File(outName);
@@ -101,7 +101,7 @@ public class WriteTxtFile extends BatchLD {
      * @param files list of file names
      * @param outfile output file name
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException can not open file
      */
     private void mergeTxtFiles(List<String> files, String outfile) throws FileNotFoundException, IOException{
         try (FileOutputStream fop = new FileOutputStream(outfile)) {
@@ -139,10 +139,10 @@ public class WriteTxtFile extends BatchLD {
      * @param method method to measure matrix distance
      * @param winSize size of each window
      * @param ldMeasure LD measures, r2, dp, sr2
-     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
      * @param maxItr maximum iterate
      * @param nrow read how many rows each time
-     * @throws IOException 
+     * @throws IOException can not open file
      */
     public void runQuantLD(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int nrow) throws IOException{
         int n = rtf.countLines(fileName1);

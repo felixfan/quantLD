@@ -16,7 +16,7 @@ public class ReadTxtFile {
      * returns the number of lines of a file
      * @param fileName file in PLINK tped format
      * @return number of lines in tped file
-     * @throws java.io.IOException
+     * @throws java.io.IOException can not open input file
     */
     public int countLines(String fileName) throws IOException{
         BufferedReader bf = null;
@@ -92,7 +92,7 @@ public class ReadTxtFile {
      * read tped file to a two-dimension array
      * @param fileName file in PLINK tped format
      * @return a two-dimension array
-     * @throws java.io.IOException 
+     * @throws java.io.IOException can not open input file
     */
     private String[][] readTpedFile(String fileName) throws IOException{
         BufferedReader bf = null;
@@ -126,7 +126,7 @@ public class ReadTxtFile {
      * @param start line to start read
      * @param end line to end read
      * @return a two-dimension array
-     * @throws java.io.IOException
+     * @throws java.io.IOException can not open input file
     */
     private String[][] readTpedFile(String fileName, int start, int end) throws IOException{
         BufferedReader bf = null;
@@ -162,7 +162,7 @@ public class ReadTxtFile {
      * @param fileName file in PLINK tped format
      * @param winSize size of each window
      * @return array of positions
-     * @throws IOException 
+     * @throws IOException can not open input file
      */
     public double[] readPos(String fileName, int winSize) throws IOException{
         BufferedReader bf = null;
@@ -208,7 +208,7 @@ public class ReadTxtFile {
      * @param start row to start read
      * @param end row to end read
      * @return array of positions
-     * @throws IOException 
+     * @throws IOException can not open input file
      */
     public double[] readPos(String fileName, int winSize, int start, int end) throws IOException{
         BufferedReader bf = null;
@@ -296,7 +296,7 @@ public class ReadTxtFile {
      * missing data was coded as -9
      * @param fileName file in PLINK tped format
      * @return a two-dimension array
-     * @throws java.io.IOException
+     * @throws java.io.IOException can not open input file
     */
     public int[][] recodeGenotype(String fileName) throws IOException{
         String gtp[][] = readTpedFile(fileName);
@@ -315,7 +315,7 @@ public class ReadTxtFile {
      * @param start line to start read
      * @param end line to end read
      * @return a two-dimension array
-     * @throws java.io.IOException
+     * @throws java.io.IOException can not open input file
     */
     public int[][] recodeGenotype(String fileName, int start, int end) throws IOException{
         String gtp[][] = readTpedFile(fileName, start, end);
