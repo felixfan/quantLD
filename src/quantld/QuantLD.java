@@ -11,7 +11,6 @@ import java.util.HashMap;
 import org.apache.commons.cli.ParseException;
 import java.util.Date;
 
-
 /**
  *
  * @author Felix Yanhui Fan felixfanyh@gmail.com
@@ -40,6 +39,7 @@ public class QuantLD {
         String tDist = "evd";
         String output = "output.txt";
         int nrow = 10000;
+        int perm = 0;
         
         if(params.containsKey("T")){
             tol = Double.parseDouble(params.get("T"));
@@ -62,6 +62,9 @@ public class QuantLD {
         if(params.containsKey("n")){
             nrow = Integer.parseInt(params.get("n"));
         }
+        if(params.containsKey("p")){
+            perm = Integer.parseInt(params.get("p"));
+        }
         // check parameters
         String[] ldMeasures = new String[]{"r2","dp","sr2"};
         if(!Arrays.asList(ldMeasures).contains(ldMeasure)){
@@ -83,10 +86,13 @@ public class QuantLD {
         }else if(maxItr < 10){
             System.out.println("Warning: less EM steps will lead to low accuracy");
         }
+        if(perm < 0){
+            System.out.println("number of permutation can not be negative");
+        }
         
         // printout program
         System.out.println( "@-------------------------------------------------------------@");
-        System.out.println( "|       quantLD       |    v0.1.0304    |     4 Mar 2016      |");
+        System.out.println( "|       quantLD       |    v0.1.0307    |     7 Mar 2016      |");
         System.out.println( "|-------------------------------------------------------------|");
         System.out.println( "|  (C) 2016 Felix Yanhui Fan, GNU General Public License, v2  |");
         System.out.println( "|-------------------------------------------------------------|");
@@ -106,6 +112,9 @@ public class QuantLD {
         System.out.println("\t" + "--max-iteration " + maxItr);
         System.out.println("\t" + "--tolerance " + tol);
         System.out.println("\t" + "--nrow " + nrow);
+        if(perm > 0){
+            System.out.println("\t" + "--perm " + perm);
+        }
         System.out.println("\t" + "--out " + output);
         
         System.out.println();
@@ -117,11 +126,18 @@ public class QuantLD {
         System.out.println("maximum number of EM steps: " + maxItr);
         System.out.println("convergence tolerance: " + tol);
         System.out.println("number of rows: " + nrow);
+        if(perm > 0){
+            System.out.println("number of permutation: " + perm);
+        }
         System.out.println("output: " + output);
         System.out.println();
         
         WriteTxtFile wtf = new WriteTxtFile();
-        wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr,nrow);
+        if(perm == 0){
+            wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr,nrow);
+        }else{
+            wtf.runQuantLDPerm(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr, nrow, perm);
+        }
         
         long endTime = System.currentTimeMillis();
         long diffTime = endTime - startTime;

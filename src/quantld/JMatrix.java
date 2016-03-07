@@ -13,7 +13,7 @@ import Jama.Matrix;
  *
  * @author Felix Yanhui Fan felixfanyh@gmail.com
  */
-public class JMatrix extends CalLD {
+public class JMatrix{
     /**
      * calculate T statistic
      * @param a LD measure matrix of the first population

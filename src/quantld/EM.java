@@ -14,13 +14,9 @@ public class EM {
     protected double tol; // Algorithm stops when sum of absolute differences between new and old haplotype frequencies is <= tol.
     protected int maxItr; // 
 
-    // default value
-    {
-        tol = 0.001;
-        maxItr = 1000;
-    }
-
     public EM() {
+        this.tol = 0.001;
+        this.maxItr = 1000;
     }
 
     public EM(double tol, int maxItr) {
@@ -127,7 +123,7 @@ public class EM {
      * @param maxItr maximum iterate
      * @return a array of 4 haplotype frequencies.
      */
-    private double[] esem(int[] gf, int[] gs, double[] h, double tol, int maxItr) {
+    private double[] esem(int[] gf, int[] gs, double[] h) {
         // x is a 3 X 3 matrix of genotype counts.
         int[][] x = countGenotype(gf, gs);
 
@@ -142,19 +138,19 @@ public class EM {
             return hh;
         }
 
-        for (i = 0; i < maxItr; i++) {
+        for (i = 0; i < this.maxItr; i++) {
             hh = esemStep(h, x);
             dh = 0;
             for (int j = 0; j < 4; j++) {
                 dh += Math.abs(h[j] - hh[j]);
                 h[j] = hh[j];
             }
-            if (dh <= tol) {
+            if (dh <= this.tol) {
                 break;
             }
         }
 
-        if (dh > tol) {
+        if (dh > this.tol) {
             System.out.println("Warnning: EM does not converge!");
         }
 
@@ -172,7 +168,7 @@ public class EM {
     private double[] esemLD(int[] gf, int[] gs) {
         double[] h0 = {0.25, 0.25, 0.25, 0.25};
 
-        double[] h = esem(gf, gs, h0, this.tol, this.maxItr);
+        double[] h = esem(gf, gs, h0);
 
         double D = h[0] * h[3] - h[1] * h[2];
 

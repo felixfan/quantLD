@@ -15,7 +15,7 @@ import java.util.HashMap;
 import org.apache.commons.cli.*;
 
 public class JOptsParse {
-    private final String packageVersion = "0.1.0304";
+    private final String packageVersion = "0.1.0307";
     
     private void printHelp(Options opts) {  
         HelpFormatter hf = new HelpFormatter();  
@@ -48,6 +48,7 @@ public class JOptsParse {
         options.addOption("t", "test", true, "method to measure distance, default evd");
         options.addOption("o", "out", true, "output file name, default output.txt");
         options.addOption("n", "nrow", true, "read how many rows each time, default 10000");
+        options.addOption("p", "perm", true, "times of permutation, default 0");
         
         //Parsing the command line arguments
         CommandLineParser parser = new DefaultParser();
@@ -94,6 +95,10 @@ public class JOptsParse {
             if(cmd.hasOption("n")){
                 String tmp = cmd.getOptionValue("n");
                 params.put("n", tmp);
+            }
+            if(cmd.hasOption("p")){
+                String tmp = cmd.getOptionValue("p");
+                params.put("p", tmp);
             }
         }
      

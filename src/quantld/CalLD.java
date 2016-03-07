@@ -12,6 +12,8 @@ package quantld;
  */
 public class CalLD extends EM {   
     public CalLD(){
+        super.tol = 0.001;
+        super.maxItr = 1000;
     }
     
     public CalLD(double tol,int maxItr){
