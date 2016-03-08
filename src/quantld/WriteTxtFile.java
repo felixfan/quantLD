@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -251,10 +252,17 @@ public class WriteTxtFile{
             }
             int start = 1;
             int end = nrow;
-            String tmpname = "tmp0";
+            String tmpdirstr = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+            File tmpdir = new File(tmpdirstr);
+            boolean bdir = tmpdir.mkdir();
+            if(!bdir){
+                System.out.println("can not create temp dir");
+                System.exit(7);
+            }
+            String tmpname = tmpdirstr + "/tmp0";
             outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
             for(int i=1;i<totsplit;i++){
-                tmpname = "tmp" + i;
+                tmpname = tmpdirstr + "/tmp" + i;
                 start = end - winSize + 2;
                 end = start + nrow - 1;
                 if(end > n){
@@ -264,11 +272,14 @@ public class WriteTxtFile{
             }
  
             List<String> fileList = new ArrayList<>();
+            List<String> dirList = new ArrayList<>();
             for(int i=0; i<totsplit;i++){
-                fileList.add("tmp"+i);
+                fileList.add(tmpdirstr + "/tmp"+i);
             }
             mergeTxtFiles(fileList,outName);
             deleteTxtFiles(fileList);
+            dirList.add(tmpdirstr);
+            deleteTxtFiles(dirList);
         }
     }
 
@@ -301,10 +312,17 @@ public class WriteTxtFile{
             }
             int start = 1;
             int end = nrow;
-            String tmpname = "tmp0";
+            String tmpdirstr = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+            File tmpdir = new File(tmpdirstr);
+            boolean bdir = tmpdir.mkdir();
+            if(!bdir){
+                System.out.println("can not create temp dir");
+                System.exit(7);
+            }
+            String tmpname = tmpdirstr + "/tmp0";
             outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
             for(int i=1;i<totsplit;i++){
-                tmpname = "tmp" + i;
+                tmpname = tmpdirstr + "/tmp" + i;
                 start = end - winSize + 2;
                 end = start + nrow - 1;
                 if(end > n){
@@ -314,11 +332,14 @@ public class WriteTxtFile{
             }
  
             List<String> fileList = new ArrayList<>();
+            List<String> dirList = new ArrayList<>();
             for(int i=0; i<totsplit;i++){
-                fileList.add("tmp"+i);
+                fileList.add(tmpdirstr + "/tmp"+i);
             }
             mergeTxtFiles(fileList,outName);
             deleteTxtFiles(fileList);  
+            dirList.add(tmpdirstr);
+            deleteTxtFiles(dirList);
         }
     }
        
