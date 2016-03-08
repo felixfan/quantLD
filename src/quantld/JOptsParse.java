@@ -14,9 +14,7 @@ package quantld;
 import java.util.HashMap;
 import org.apache.commons.cli.*;
 
-public class JOptsParse {
-    private final String packageVersion = "0.1.0307";
-    
+public class JOptsParse {  
     private void printHelp(Options opts) {  
         HelpFormatter hf = new HelpFormatter();  
         hf.printHelp(" ", opts);  
@@ -57,7 +55,7 @@ public class JOptsParse {
             printHelp(options);
             System.exit(0);
         }else if(cmd.hasOption("version")){
-            System.out.println("quantLD " + packageVersion);
+            System.out.println("quantLD " + globalSetting.packageVersion);
             System.exit(0);
         }else{
             if(cmd.hasOption("f")){

@@ -186,6 +186,45 @@ public class WriteTxtFile{
     }
     
     /**
+     * write output to a file
+     * @param outName output file name
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @param method method to measure matrix distance
+     * @param winSize size of each window
+     * @param ldMeasure LD measures, r2, dp, sr2
+     * @param start row to start read
+     * @param end row to end read
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
+     * @param maxItr maximum iterate
+     * @param perm times of permutation
+     * @throws IOException can not open file
+     */
+    public void outputTxtPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr, int perm) throws IOException{   
+        File outfile = new File(outName);
+
+        double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
+        double[] pos = rtf.readPos(fileName1, winSize, start, end);
+        int n = ans.length;
+        try(FileOutputStream fop = new FileOutputStream(outfile)){
+            if(!outfile.exists()){
+                outfile.createNewFile();
+            }
+                        
+            for(int i=0; i<n;i++){
+                String tmp = pos[i] + "\t" + ans[i][0] + "\t" + ans[i][1] + "\t" + ans[i][2] + "\n";
+                byte[] contentInBytes = tmp.getBytes();
+                fop.write(contentInBytes);
+                fop.flush(); 
+            }
+            
+            fop.close();
+        }catch(IOException e){
+            e.printStackTrace(System.out);
+        } 
+    }
+    
+    /**
      * run quantLD block by block
      * @param outName output file name
      * @param fileName1 file in PLINK tped format
@@ -252,7 +291,35 @@ public class WriteTxtFile{
         int n = rtf.countLines(fileName1);
         if(n <= nrow){
             outputTxtPerm(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm);
-        } 
+        }else{
+            int totlen = n + winSize -1;
+            int totsplit;
+            if(totlen % nrow == 0){
+                totsplit = (n + winSize - 1) / nrow;
+            }else{
+                totsplit = (n + winSize - 1) / nrow + 1;
+            }
+            int start = 1;
+            int end = nrow;
+            String tmpname = "tmp0";
+            outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
+            for(int i=1;i<totsplit;i++){
+                tmpname = "tmp" + i;
+                start = end - winSize + 2;
+                end = start + nrow - 1;
+                if(end > n){
+                    end = n;
+                }
+                outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
+            }
+ 
+            List<String> fileList = new ArrayList<>();
+            for(int i=0; i<totsplit;i++){
+                fileList.add("tmp"+i);
+            }
+            mergeTxtFiles(fileList,outName);
+            deleteTxtFiles(fileList);  
+        }
     }
        
 }

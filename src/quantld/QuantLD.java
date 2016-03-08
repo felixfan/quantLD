@@ -16,8 +16,12 @@ import java.util.Date;
  * @author Felix Yanhui Fan felixfanyh@gmail.com
  */
 
-public class QuantLD {
+class globalSetting{
+    public static final String packageVersion = "v0.1.0308";
+    public static final String lastReviseDate = "08 Mar 2016";
+}
 
+public class QuantLD {   
     /**
      * @param args the command line arguments
      * @throws org.apache.commons.cli.ParseException can not parse opts
@@ -92,7 +96,7 @@ public class QuantLD {
         
         // printout program
         System.out.println( "@-------------------------------------------------------------@");
-        System.out.println( "|       quantLD       |    v0.1.0307    |     7 Mar 2016      |");
+        System.out.println( "|       quantLD       |    " +  globalSetting.packageVersion + "   |     " + globalSetting.lastReviseDate  + "      |");
         System.out.println( "|-------------------------------------------------------------|");
         System.out.println( "|  (C) 2016 Felix Yanhui Fan, GNU General Public License, v2  |");
         System.out.println( "|-------------------------------------------------------------|");
