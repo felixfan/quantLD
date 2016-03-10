@@ -180,18 +180,19 @@ public class EM {
 
         double Dmax;
         if (D < 0) {
-            Dmax = Math.max(-pA * pB, -qA * qB);
+            Dmax = Math.min(pA * pB, qA * qB);
         } else {
             Dmax = Math.min(pA * qB, qA * pB);
         }
-
+        
+        // r2 ranges between 0 and 1
         double r2 = D * D / mul;
         double signedR2 = r2;
         if (D < 0) {
             signedR2 *= -1;
         }
 
-        // D prime ranges between 0 and 1
+        // D prime ranges between -1 and 1
         double Dprime = D / Dmax;
 
         double[] ans = {D, Dprime, r2, signedR2};
