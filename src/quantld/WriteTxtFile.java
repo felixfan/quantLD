@@ -23,8 +23,15 @@ import java.util.List;
 public class WriteTxtFile{
     private final ReadTxtFile rtf = new ReadTxtFile();
     private final BatchLD bld = new BatchLD();
-    private final Permutation pm = new Permutation();
+    private final Permutation pm;
     
+    WriteTxtFile(){
+        pm = new Permutation();
+    }
+    
+    WriteTxtFile(long seed){
+        pm = new Permutation(seed);
+    }
     /**
      * convert milliseconds to hours, minutes and seconds
      * @param miSec milliseconds

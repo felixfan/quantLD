@@ -38,7 +38,7 @@ public class Permutation{
      * @param ss2 sample size of population 2
      * @return shuffled index
      */
-    public List<List<Integer>> shuffIndex(int n, int ss1, int ss2){
+    private List<List<Integer>> shuffIndex(int n, int ss1, int ss2){
         List<List<Integer>> idx = new ArrayList<>();
         int ss = ss1 + ss2;
 
@@ -62,24 +62,36 @@ public class Permutation{
         return idx;
     }
     
-    
+    /**
+     * run quantLD with permutation
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @param method method to measure matrix distance
+     * @param winSize size of each window
+     * @param ldMeasure LD measures, r2, dp, sr2
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
+     * @param maxItr maximum iterate
+     * @param perm times of permutation
+     * @return array of matrix distance and permutation p-values
+     * @throws IOException 
+     */
     public double[][] permQuantLD(String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int perm) throws IOException{
         // org step
         ReadTxtFile rtf = new ReadTxtFile();
         CalLD cld = new CalLD(tol, maxItr);
         BatchLD bld = new BatchLD();
-        int[][] gca = rtf.recodeGenotype(fileName1);
-        int[][] gcb = rtf.recodeGenotype(fileName2);
         
-        double[][][] r2a = cld.CalRDprime(gca, winSize, ldMeasure);
-        double[][][] r2b = cld.CalRDprime(gcb, winSize, ldMeasure);
+        int[][][] gc = rtf.recodeGenotype(fileName1, fileName2);
+        
+        double[][][] r2a = cld.CalRDprime(gc[0], winSize, ldMeasure);
+        double[][][] r2b = cld.CalRDprime(gc[1], winSize, ldMeasure);       
         double[] orgLDdiff = bld.calLDdiff(r2a, r2b, method, ldMeasure);
 
         // permutation step
-        int ns1 = gca.length;    // number of SNP in pop 1
-        int ns2 = gcb.length;    // number of SNP in pop 2
-        int ss1 = gca[0].length; // number of individual in pop 1
-        int ss2 = gcb[0].length; // number of individual in pop 2
+        int ns1 = gc[0].length;    // number of SNP in pop 1
+        int ns2 = gc[1].length;    // number of SNP in pop 2
+        int ss1 = gc[0][0].length; // number of individual in pop 1
+        int ss2 = gc[1][0].length; // number of individual in pop 2
         if(ns1 != ns2){
             System.out.println("the number of SNPs is not equal in two populations!");
             System.exit(5);
@@ -98,9 +110,9 @@ public class Permutation{
                 for(int j =0; j<ss1; j++){ // total number of individual
                     int tidx = idx1.get(j);
                     if( tidx < ss1){
-                        gcap[i][j] = gca[i][tidx];
+                        gcap[i][j] = gc[0][i][tidx];
                     }else{
-                        gcap[i][j] = gcb[i][tidx - ss1];
+                        gcap[i][j] = gc[1][i][tidx - ss1];
                     }
                 }
             }
@@ -109,9 +121,9 @@ public class Permutation{
                 for(int j =0; j<ss2; j++){ // total number of individual
                     int tidx = idx1.get(j+ss1);
                     if( tidx < ss1){
-                        gcbp[i][j] = gca[i][tidx];
+                        gcbp[i][j] = gc[0][i][tidx];
                     }else{
-                        gcbp[i][j] = gcb[i][tidx - ss1];
+                        gcbp[i][j] = gc[1][i][tidx - ss1];
                     }
                 }
             }
@@ -138,23 +150,38 @@ public class Permutation{
         return ans;
     }
     
+    /**
+     * run quantLD with permutation
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @param method method to measure matrix distance
+     * @param winSize size of each window
+     * @param ldMeasure LD measures, r2, dp, sr2
+     * @param start row to start read
+     * @param end row to end read
+     * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
+     * @param maxItr maximum iterate
+     * @param perm times of permutation
+     * @return array of matrix distance and permutation p-values
+     * @throws IOException 
+     */
     public double[][] permQuantLD(String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr, int perm) throws IOException{
         // org step
         ReadTxtFile rtf = new ReadTxtFile();
         CalLD cld = new CalLD(tol, maxItr);
         BatchLD bld = new BatchLD();
-        int[][] gca = rtf.recodeGenotype(fileName1, start, end);
-        int[][] gcb = rtf.recodeGenotype(fileName2, start, end);
         
-        double[][][] r2a = cld.CalRDprime(gca, winSize, ldMeasure);
-        double[][][] r2b = cld.CalRDprime(gcb, winSize, ldMeasure);
+        int[][][] gc = rtf.recodeGenotype(fileName1,fileName2, start, end);
+        
+        double[][][] r2a = cld.CalRDprime(gc[0], winSize, ldMeasure);
+        double[][][] r2b = cld.CalRDprime(gc[1], winSize, ldMeasure);
         double[] orgLDdiff = bld.calLDdiff(r2a, r2b, method, ldMeasure);
 
         // permutation step
-        int ns1 = gca.length;    // number of SNP in pop 1
-        int ns2 = gcb.length;    // number of SNP in pop 2
-        int ss1 = gca[0].length; // number of individual in pop 1
-        int ss2 = gcb[0].length; // number of individual in pop 2
+        int ns1 = gc[0].length;    // number of SNP in pop 1
+        int ns2 = gc[1].length;    // number of SNP in pop 2
+        int ss1 = gc[0][0].length; // number of individual in pop 1
+        int ss2 = gc[1][0].length; // number of individual in pop 2
         if(ns1 != ns2){
             System.out.println("the number of SNPs is not equal in two populations!");
             System.exit(5);
@@ -173,9 +200,9 @@ public class Permutation{
                 for(int j =0; j<ss1; j++){ // total number of individual
                     int tidx = idx1.get(j);
                     if( tidx < ss1){
-                        gcap[i][j] = gca[i][tidx];
+                        gcap[i][j] = gc[0][i][tidx];
                     }else{
-                        gcap[i][j] = gcb[i][tidx - ss1];
+                        gcap[i][j] = gc[1][i][tidx - ss1];
                     }
                 }
             }
@@ -184,9 +211,9 @@ public class Permutation{
                 for(int j =0; j<ss2; j++){ // total number of individual
                     int tidx = idx1.get(j+ss1);
                     if( tidx < ss1){
-                        gcbp[i][j] = gca[i][tidx];
+                        gcbp[i][j] = gc[0][i][tidx];
                     }else{
-                        gcbp[i][j] = gcb[i][tidx - ss1];
+                        gcbp[i][j] = gc[1][i][tidx - ss1];
                     }
                 }
             }

@@ -80,7 +80,73 @@ public class ReadTxtFile {
                 }else if(t>=a && t>=c && t>=g){
                     ma[i] = "T";
                 }
-            }else{
+            }else{// missing genotype in all individual, major allele will be code as -9
+                ma[i] = "-9";
+            }
+            i++;
+        }
+        return ma;
+    }
+    
+    /**
+     * find major allele for each SNP
+     * @param gtp1 a two-dimension array, output of readTpedFile
+     * @param gtp2 a two-dimension array, output of readTpedFile
+     * @return array of major allele for each SNP
+    */
+    private String[] getMajorAllele(String gtp1[][], String gtp2[][]){
+        int i = 0;
+        int n = gtp1.length;
+        String ma[] = new String[n];
+        for(int j=0; j< n; j++){
+            int a = 0;
+            int c = 0;
+            int g = 0;
+            int t = 0;
+            for(int k = 4; k< gtp1[j].length; k++){
+                switch (gtp1[j][k]) {
+                    case "A":
+                        a++;
+                        break;
+                    case "C":
+                        c++;
+                        break;
+                    case "G":
+                        g++;
+                        break;
+                    case "T":
+                        t++;
+                        break;
+                }
+            }
+            for(int k = 4; k< gtp2[j].length; k++){
+                switch (gtp2[j][k]) {
+                    case "A":
+                        a++;
+                        break;
+                    case "C":
+                        c++;
+                        break;
+                    case "G":
+                        g++;
+                        break;
+                    case "T":
+                        t++;
+                        break;
+                }
+            }
+            
+            if((a+c+g+t) > 0){
+                if(a>=c && a>=g && a>=t){
+                    ma[i] = "A";
+                }else if(c>=a && c>=g && c>=t){
+                    ma[i] = "C";
+                }else if(g>=a && g>=c && g>=t){
+                    ma[i] = "G";
+                }else if(t>=a && t>=c && t>=g){
+                    ma[i] = "T";
+                }
+            }else{// missing genotype in all individual, major allele will be code as -9
                 ma[i] = "-9";
             }
             i++;
@@ -271,8 +337,52 @@ public class ReadTxtFile {
                 int j = i + 1;
                 if(snp[i].equals(snp[j])){
                     if(snp[i].equals(ma[n])){
-                        genoCode[n][m] = 2;
-                    }else if(snp[i].equals("0") || snp[i].equals("-9")){
+                        if(!"-9".equals(ma[n])){ // major allele is available
+                            genoCode[n][m] = 2;
+                        }else{
+                            genoCode[n][m] = -9;
+                        }    
+                    }else if(snp[i].equals("0") || snp[i].equals("-9")){//missing data code as 0 or -9 in tped
+                        genoCode[n][m] = -9;
+                    }else{
+                        genoCode[n][m] = 0;
+                    }
+                }else{
+                    genoCode[n][m] = 1;
+                }
+                m++;
+            }
+            n++;
+        }
+        
+        return genoCode;
+    }
+    
+    /**
+     * code the genotypes for each SNP
+     * homozygous of major allele was coded as 2
+     * heterozygous was coded as 1
+     * homozygous of minor allele was coded as 0
+     * missing data was coded as -9
+     * @param gtp a two-dimension array, output of readTpedFile
+     * @return a two-dimension array
+    */
+    private int[][] codeGenotype(String gtp[][], String[] ma){
+        int genoCode[][];
+        genoCode = new int[gtp.length][(gtp[0].length-4)/2];
+        int n = 0;
+        for(String snp[] : gtp){
+            int m = 0;
+            for(int i = 4; i < snp.length -1; i += 2){
+                int j = i + 1;
+                if(snp[i].equals(snp[j])){
+                    if(snp[i].equals(ma[n])){
+                        if(!"-9".equals(ma[n])){ // major allele is available
+                            genoCode[n][m] = 2;
+                        }else{
+                            genoCode[n][m] = -9;
+                        }    
+                    }else if(snp[i].equals("0") || snp[i].equals("-9")){//missing data code as 0 or -9 in tped
                         genoCode[n][m] = -9;
                     }else{
                         genoCode[n][m] = 0;
@@ -311,6 +421,27 @@ public class ReadTxtFile {
      * heterozygous was coded as 1
      * homozygous of minor allele was coded as 0
      * missing data was coded as -9
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @return a two-dimension array
+     * @throws java.io.IOException can not open input file
+    */
+    public int[][][] recodeGenotype(String fileName1, String fileName2) throws IOException{
+        String gtp1[][] = readTpedFile(fileName1);
+        String gtp2[][] = readTpedFile(fileName2);
+        String[] ma = getMajorAllele(gtp1, gtp2);
+        int[][][] genoCode = new int[2][][];
+        genoCode[0] = codeGenotype(gtp1, ma);
+        genoCode[1] = codeGenotype(gtp2, ma);
+        return genoCode; 
+    }
+    
+    /**
+     * code the genotypes for each SNP
+     * homozygous of major allele was coded as 2
+     * heterozygous was coded as 1
+     * homozygous of minor allele was coded as 0
+     * missing data was coded as -9
      * @param fileName file in PLINK tped format
      * @param start line to start read
      * @param end line to end read
@@ -321,5 +452,28 @@ public class ReadTxtFile {
         String gtp[][] = readTpedFile(fileName, start, end);
         int genoCode[][] = codeGenotype(gtp);
         return genoCode;
+    }
+    
+    /**
+     * code the genotypes for each SNP
+     * homozygous of major allele was coded as 2
+     * heterozygous was coded as 1
+     * homozygous of minor allele was coded as 0
+     * missing data was coded as -9
+     * @param fileName1 file in PLINK tped format
+     * @param fileName2 file in PLINK tped format
+     * @param start line to start read
+     * @param end line to end read
+     * @return a two-dimension array
+     * @throws java.io.IOException can not open input file
+    */
+    public int[][][] recodeGenotype(String fileName1, String fileName2, int start, int end) throws IOException{
+        String gtp1[][] = readTpedFile(fileName1, start, end);
+        String gtp2[][] = readTpedFile(fileName2, start, end);
+        String[] ma = getMajorAllele(gtp1, gtp2);
+        int[][][] genoCode = new int[2][][];
+        genoCode[0] = codeGenotype(gtp1, ma);
+        genoCode[1] = codeGenotype(gtp2, ma);
+        return genoCode; 
     }
 }

@@ -17,8 +17,8 @@ import java.util.Date;
  */
 
 class globalSetting{
-    public static final String packageVersion = "v0.1.0308";
-    public static final String lastReviseDate = "08 Mar 2016";
+    public static final String packageVersion = "v0.1.0314";
+    public static final String lastReviseDate = "14 Mar 2016";
 }
 
 public class QuantLD {   
@@ -42,8 +42,10 @@ public class QuantLD {
         int winSize = 50;
         String tDist = "evd";
         String output = "output.txt";
-        int nrow = 10000;
+        int nrow = 1000;
         int perm = 0;
+        boolean seedb = false;
+        long seedl = 0;
         
         if(params.containsKey("T")){
             tol = Double.parseDouble(params.get("T"));
@@ -68,6 +70,10 @@ public class QuantLD {
         }
         if(params.containsKey("p")){
             perm = Integer.parseInt(params.get("p"));
+        }
+        if(params.containsKey("S")){
+            seedl = Long.parseLong(params.get("S"));
+            seedb = true;
         }
         // check parameters
         String[] ldMeasures = new String[]{"r2","dp","sr2"};
@@ -118,6 +124,9 @@ public class QuantLD {
         System.out.println("\t" + "--nrow " + nrow);
         if(perm > 0){
             System.out.println("\t" + "--perm " + perm);
+            if(seedb){
+                System.out.println("\t" + "--seed " + seedl);
+            }
         }
         System.out.println("\t" + "--out " + output);
         
@@ -136,7 +145,13 @@ public class QuantLD {
         System.out.println("output: " + output);
         System.out.println();
         
-        WriteTxtFile wtf = new WriteTxtFile();
+        WriteTxtFile wtf;
+        if(perm > 0 && seedb){
+            wtf = new WriteTxtFile(seedl);
+        }else{
+            wtf = new WriteTxtFile();
+        }
+        
         if(perm == 0){
             wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr,nrow);
         }else{

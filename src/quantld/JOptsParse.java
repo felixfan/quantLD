@@ -45,8 +45,9 @@ public class JOptsParse {
         options.addOption("w", "win-size", true, "window size, default 50");
         options.addOption("t", "test", true, "method to measure distance, default evd");
         options.addOption("o", "out", true, "output file name, default output.txt");
-        options.addOption("n", "nrow", true, "read how many rows each time, default 10000");
+        options.addOption("n", "nrow", true, "read how many rows each time, default 1000");
         options.addOption("p", "perm", true, "times of permutation, default 0");
+        options.addOption("S", "seed", true, "random seed");
         
         //Parsing the command line arguments
         CommandLineParser parser = new DefaultParser();
@@ -97,6 +98,10 @@ public class JOptsParse {
             if(cmd.hasOption("p")){
                 String tmp = cmd.getOptionValue("p");
                 params.put("p", tmp);
+            }
+            if(cmd.hasOption("S")){
+                String tmp = cmd.getOptionValue("S");
+                params.put("S", tmp);
             }
         }
      
