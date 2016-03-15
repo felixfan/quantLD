@@ -250,13 +250,7 @@ public class WriteTxtFile{
         if(n <= nrow){
             outputTxt(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);
         }else{
-            int totlen = n + winSize -1;
             int totsplit;
-            if(totlen % nrow == 0){
-                totsplit = (n + winSize - 1) / nrow;
-            }else{
-                totsplit = (n + winSize - 1) / nrow + 1;
-            }
             int start = 1;
             int end = nrow;
             String tmpdirstr = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
@@ -268,19 +262,22 @@ public class WriteTxtFile{
             }
             String tmpname = tmpdirstr + "/tmp0";
             outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
-            for(int i=1;i<totsplit;i++){
-                tmpname = tmpdirstr + "/tmp" + i;
+            for(totsplit=1;;totsplit++){
+                tmpname = tmpdirstr + "/tmp" + totsplit;
                 start = end - winSize + 2;
                 end = start + nrow - 1;
-                if(end > n){
+                if(end >= n){
                     end = n;
                 }
                 outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
+                if(end == n){
+                    break;
+                }
             }
  
             List<String> fileList = new ArrayList<>();
             List<String> dirList = new ArrayList<>();
-            for(int i=0; i<totsplit;i++){
+            for(int i=0; i<=totsplit;i++){
                 fileList.add(tmpdirstr + "/tmp"+i);
             }
             mergeTxtFiles(fileList,outName);
@@ -310,13 +307,7 @@ public class WriteTxtFile{
         if(n <= nrow){
             outputTxtPerm(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm);
         }else{
-            int totlen = n + winSize -1;
             int totsplit;
-            if(totlen % nrow == 0){
-                totsplit = (n + winSize - 1) / nrow;
-            }else{
-                totsplit = (n + winSize - 1) / nrow + 1;
-            }
             int start = 1;
             int end = nrow;
             String tmpdirstr = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
@@ -328,19 +319,22 @@ public class WriteTxtFile{
             }
             String tmpname = tmpdirstr + "/tmp0";
             outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
-            for(int i=1;i<totsplit;i++){
-                tmpname = tmpdirstr + "/tmp" + i;
+            for(totsplit=1;;totsplit++){
+                tmpname = tmpdirstr + "/tmp" + totsplit;
                 start = end - winSize + 2;
                 end = start + nrow - 1;
-                if(end > n){
+                if(end >= n){
                     end = n;
                 }
                 outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
+                if(end == n){
+                    break;
+                }
             }
  
             List<String> fileList = new ArrayList<>();
             List<String> dirList = new ArrayList<>();
-            for(int i=0; i<totsplit;i++){
+            for(int i=0; i<=totsplit;i++){
                 fileList.add(tmpdirstr + "/tmp"+i);
             }
             mergeTxtFiles(fileList,outName);
