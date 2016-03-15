@@ -18,17 +18,14 @@ import java.util.Random;
  * @author Felix Yanhui Fan  felixfanyh@gmail.com
  */
 public class Permutation{
-    private final long seed;
-    boolean useSeed;
+    Random r;
     
     Permutation(){
-        this.useSeed = false;
-        this.seed = 0; // meaningless
+        r = new Random();
     }
     
     Permutation(long seed){
-        this.useSeed = true;
-        this.seed = seed;
+        r = new Random(seed);
     }
     
     /**
@@ -45,13 +42,6 @@ public class Permutation{
         List<Integer> org = new ArrayList<>();
         for (int i = 0; i < ss; i++){
            org.add(i); 
-        }
-        
-        Random r;
-        if(this.useSeed == false){
-            r = new Random();
-        }else{
-            r = new Random(this.seed);
         }
         
         for (int i = 0; i < n; i++) {
