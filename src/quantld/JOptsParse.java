@@ -31,24 +31,24 @@ public class JOptsParse {
         // create Options object
         Options options = new Options();
         // create the boolean options
-        Option help = new Option("help", "print this message" );
-        Option version = new Option("version", "print the version information and exit");
+        Option help = new Option("h", "help",false, "print this message" );
+        Option version = new Option("v","version",false, "print the version information and exit");
         // add the boolean options
         options.addOption(help);
         options.addOption(version);
         // add other options
         options.addOption("f", "first-tped", true, "first input genotype file, required");
         options.addOption("s", "second-tped", true, "second input genotype file, required");
-        options.addOption("T", "tolerance", true, "convergence tolerance, default 0.001");
-        options.addOption("i", "max-iteration", true, "maximum number of EM steps, default 1000");
+        options.addOption("tol", "conv-tolerance", true, "convergence tolerance, default 0.001");
+        options.addOption("iter", "max-iteration", true, "maximum number of EM steps, default 1000");
         options.addOption("m", "ld-measure", true, "LD measure, default r2");
         options.addOption("w", "win-size", true, "window size, default 50");
-        options.addOption("t", "test", true, "method to measure distance, default evd");
+        options.addOption("d", "ld-diff-measure", true, "method to measure LD difference, default evd");
         options.addOption("o", "out", true, "output file name, default output.txt");
-        options.addOption("n", "nrow", true, "read how many rows each time, default 1000");
+        options.addOption("nr", "num-rows", true, "read how many rows each time, default 1000");
         options.addOption("p", "perm", true, "times of permutation, default 0");
-        options.addOption("S", "seed", true, "random seed");
-        options.addOption("nt","thread",true,"threads used in permutation, default 1");
+        options.addOption("seed", "rand-seed", true, "random seed");
+        options.addOption("nt","num-threads",true,"threads used in permutation, default 1");
         
         //Parsing the command line arguments
         CommandLineParser parser = new DefaultParser();
@@ -57,7 +57,7 @@ public class JOptsParse {
             printHelp(options);
             System.exit(0);
         }else if(cmd.hasOption("version")){
-            System.out.println("quantLD " + globalSetting.packageVersion);
+            System.out.println("quantLD " + globalSetting.packageVersion + " " + globalSetting.lastReviseDate);
             System.exit(0);
         }else{
             if(cmd.hasOption("f")){
@@ -72,13 +72,13 @@ public class JOptsParse {
                 String tmp = cmd.getOptionValue("m");
                 params.put("m", tmp);
             }
-            if(cmd.hasOption("t")){
-                String tmp = cmd.getOptionValue("t");
-                params.put("t", tmp);
+            if(cmd.hasOption("d")){
+                String tmp = cmd.getOptionValue("d");
+                params.put("d", tmp);
             }
-            if(cmd.hasOption("i")){
-                String tmp = cmd.getOptionValue("i");
-                params.put("i", tmp);
+            if(cmd.hasOption("iter")){
+                String tmp = cmd.getOptionValue("iter");
+                params.put("iter", tmp);
             }
             if(cmd.hasOption("w")){
                 String tmp = cmd.getOptionValue("w");
@@ -88,21 +88,21 @@ public class JOptsParse {
                 String tmp = cmd.getOptionValue("o");
                 params.put("o", tmp);
             }
-            if(cmd.hasOption("T")){
-                String tmp = cmd.getOptionValue("T");
-                params.put("T", tmp);
+            if(cmd.hasOption("tol")){
+                String tmp = cmd.getOptionValue("tol");
+                params.put("tol", tmp);
             }
-            if(cmd.hasOption("n")){
-                String tmp = cmd.getOptionValue("n");
-                params.put("n", tmp);
+            if(cmd.hasOption("nr")){
+                String tmp = cmd.getOptionValue("nr");
+                params.put("nr", tmp);
             }
             if(cmd.hasOption("p")){
                 String tmp = cmd.getOptionValue("p");
                 params.put("p", tmp);
             }
-            if(cmd.hasOption("S")){
-                String tmp = cmd.getOptionValue("S");
-                params.put("S", tmp);
+            if(cmd.hasOption("seed")){
+                String tmp = cmd.getOptionValue("seed");
+                params.put("seed", tmp);
             }
             if(cmd.hasOption("nt")){
                 String tmp=cmd.getOptionValue("nt");

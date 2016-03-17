@@ -114,49 +114,12 @@ public class Permutation{
         for (int s = 0; s < runningThread; s++) {
             Future<String> task = serv.take();
             String infor = task.get();
-            System.out.println(infor);
+            //System.out.println(infor);
         }
-        exec.shutdown();          
-        
-//        for(List<Integer> idx1 : idx){ // total number of permutation   
-//            int[][] gcap = new int[ns1][ss1];
-//            int[][] gcbp = new int[ns2][ss2];
-//            // pop1
-//            for(int i=0; i<ns1;i++){// total number of SNP
-//                for(int j =0; j<ss1; j++){ // total number of individual
-//                    int tidx = idx1.get(j);
-//                    if( tidx < ss1){
-//                        gcap[i][j] = gc[0][i][tidx];
-//                    }else{
-//                        gcap[i][j] = gc[1][i][tidx - ss1];
-//                    }
-//                }
-//            }
-//            // pop2
-//            for(int i=0; i<ns2;i++){// total number of SNP
-//                for(int j =0; j<ss2; j++){ // total number of individual
-//                    int tidx = idx1.get(j+ss1);
-//                    if( tidx < ss1){
-//                        gcbp[i][j] = gc[0][i][tidx];
-//                    }else{
-//                        gcbp[i][j] = gc[1][i][tidx - ss1];
-//                    }
-//                }
-//            }
-//            // cal static
-//            double[][][] r2ap = cld.CalRDprime(gcap, winSize, ldMeasure);
-//            double[][][] r2bp = cld.CalRDprime(gcbp, winSize, ldMeasure);
-//            double[] pmLDdiff = bld.calLDdiff(r2ap, r2bp, method, ldMeasure);
-//            for(int i=0; i<pmLDdiff.length; i++){
-//                if(pmLDdiff[i] >= orgLDdiff[i]){
-//                    pmp[i] += 1;
-//                }
-//            }
-//        }
-        
-        double[][] ans = new double[pmp.length][3];
+        exec.shutdown();                 
         
         // cal p
+        double[][] ans = new double[pmp.length][3];              
         for(int i=0; i< pmp.length; i++){
             ans[i][0] = orgLDdiff[i];
             ans[i][1] = pmp[i] / (perm + 1);
@@ -222,49 +185,12 @@ public class Permutation{
         for (int s = 0; s < runningThread; s++) {
             Future<String> task = serv.take();
             String infor = task.get();
-            System.out.println(infor);
+            //System.out.println(infor);
         }
         exec.shutdown();                
         
-//        for(List<Integer> idx1 : idx){ // total number of permutation   
-//            int[][] gcap = new int[ns1][ss1];
-//            int[][] gcbp = new int[ns2][ss2];
-//            // pop1
-//            for(int i=0; i<ns1;i++){// total number of SNP
-//                for(int j =0; j<ss1; j++){ // total number of individual
-//                    int tidx = idx1.get(j);
-//                    if( tidx < ss1){
-//                        gcap[i][j] = gc[0][i][tidx];
-//                    }else{
-//                        gcap[i][j] = gc[1][i][tidx - ss1];
-//                    }
-//                }
-//            }
-//            // pop2
-//            for(int i=0; i<ns2;i++){// total number of SNP
-//                for(int j =0; j<ss2; j++){ // total number of individual
-//                    int tidx = idx1.get(j+ss1);
-//                    if( tidx < ss1){
-//                        gcbp[i][j] = gc[0][i][tidx];
-//                    }else{
-//                        gcbp[i][j] = gc[1][i][tidx - ss1];
-//                    }
-//                }
-//            }
-//            // cal static
-//            double[][][] r2ap = cld.CalRDprime(gcap, winSize, ldMeasure);
-//            double[][][] r2bp = cld.CalRDprime(gcbp, winSize, ldMeasure);
-//            double[] pmLDdiff = bld.calLDdiff(r2ap, r2bp, method, ldMeasure);
-//            for(int i=0; i<pmLDdiff.length; i++){
-//                if(pmLDdiff[i] >= orgLDdiff[i]){
-//                    pmp[i] += 1;
-//                }
-//            }
-//        }
-        
-        double[][] ans = new double[pmp.length][3];
-        
         // cal p
+        double[][] ans = new double[pmp.length][3];
         for(int i=0; i< pmp.length; i++){
             ans[i][0] = orgLDdiff[i];
             ans[i][1] = pmp[i] / (perm + 1);
@@ -331,9 +257,7 @@ public class Permutation{
             }            
             
         }
-        
-        
-        
+         
         @Override
         public String call() throws Exception {
             double[][][] r2ap = cld.CalRDprime(gcap, winSize, ldMeasure);

@@ -336,7 +336,7 @@ public class WriteTxtFile{
                 if(end >= n){
                     end = n;
                 }
-                System.out.println("-------"+"start:"+start+"-------"+"end:"+end+"------"+"totsplit:"+totsplit+"--------");
+                //System.out.println("-------"+"start:"+start+"-------"+"end:"+end+"------"+"totsplit:"+totsplit+"--------");
                 outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm,intThread);
                 if(end == n){
                     break;

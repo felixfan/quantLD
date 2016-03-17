@@ -51,11 +51,11 @@ public class QuantLD {
         long seedl = 0;
         int intThread=1;
         
-        if(params.containsKey("T")){
-            tol = Double.parseDouble(params.get("T"));
+        if(params.containsKey("tol")){
+            tol = Double.parseDouble(params.get("tol"));
         }
-        if(params.containsKey("i")){
-            maxItr = Integer.parseInt(params.get("i"));
+        if(params.containsKey("iter")){
+            maxItr = Integer.parseInt(params.get("iter"));
         }
         if(params.containsKey("m")){
             ldMeasure = params.get("m");
@@ -63,20 +63,20 @@ public class QuantLD {
         if(params.containsKey("w")){
             winSize = Integer.parseInt(params.get("w"));
         }
-        if(params.containsKey("t")){
-            tDist = params.get("t");
+        if(params.containsKey("d")){
+            tDist = params.get("d");
         }
         if(params.containsKey("o")){
             output = params.get("o");
         }
-        if(params.containsKey("n")){
-            nrow = Integer.parseInt(params.get("n"));
+        if(params.containsKey("nr")){
+            nrow = Integer.parseInt(params.get("nr"));
         }
         if(params.containsKey("p")){
             perm = Integer.parseInt(params.get("p"));
         }
-        if(params.containsKey("S")){
-            seedl = Long.parseLong(params.get("S"));
+        if(params.containsKey("seed")){
+            seedl = Long.parseLong(params.get("seed"));
             seedb = true;
         }
         if(params.containsKey("nt")){
@@ -105,7 +105,8 @@ public class QuantLD {
             System.out.println("Warning: less EM steps will lead to low accuracy");
         }
         if(perm < 0){
-            System.out.println("number of permutation can not be negative");
+            System.out.println("Erro: number of permutation can not be negative");
+            System.exit(1);
         }
         
         // printout program
@@ -127,14 +128,17 @@ public class QuantLD {
         System.out.println("\t" + "--second-tped " + fileName2);
         System.out.println("\t" + "--win-size " + winSize);
         System.out.println("\t" + "--ld-measure " + ldMeasure);
-        System.out.println("\t" + "--test " + tDist);
+        System.out.println("\t" + "--ld-diff-measure " + tDist);
         System.out.println("\t" + "--max-iteration " + maxItr);
-        System.out.println("\t" + "--tolerance " + tol);
-        System.out.println("\t" + "--nrow " + nrow);
+        System.out.println("\t" + "--conv-tolerance " + tol);
+        System.out.println("\t" + "--num-rows " + nrow);
         if(perm > 0){
             System.out.println("\t" + "--perm " + perm);
             if(seedb){
-                System.out.println("\t" + "--seed " + seedl);
+                System.out.println("\t" + "--rand-seed " + seedl);
+            }
+            if(intThread > 1){
+                System.out.println("\t" + "--num-threads " + intThread);
             }
         }
         System.out.println("\t" + "--out " + output);
@@ -150,6 +154,12 @@ public class QuantLD {
         System.out.println("number of rows: " + nrow);
         if(perm > 0){
             System.out.println("number of permutation: " + perm);
+            if(seedb){
+                System.out.println("random seed: " + seedl);
+            }
+            if(intThread > 1){
+                System.out.println("number of threads: " + intThread);
+            }
         }
         System.out.println("output: " + output);
         System.out.println();
