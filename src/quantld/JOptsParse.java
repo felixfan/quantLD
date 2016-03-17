@@ -48,6 +48,7 @@ public class JOptsParse {
         options.addOption("n", "nrow", true, "read how many rows each time, default 1000");
         options.addOption("p", "perm", true, "times of permutation, default 0");
         options.addOption("S", "seed", true, "random seed");
+        options.addOption("nt","thread",true,"threads used in permutation, default 1");
         
         //Parsing the command line arguments
         CommandLineParser parser = new DefaultParser();
@@ -102,6 +103,10 @@ public class JOptsParse {
             if(cmd.hasOption("S")){
                 String tmp = cmd.getOptionValue("S");
                 params.put("S", tmp);
+            }
+            if(cmd.hasOption("nt")){
+                String tmp=cmd.getOptionValue("nt");
+                params.put("nt", tmp);
             }
         }
      

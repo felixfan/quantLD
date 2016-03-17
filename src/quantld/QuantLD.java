@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.commons.cli.ParseException;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -17,8 +18,8 @@ import java.util.Date;
  */
 
 class globalSetting{
-    public static final String packageVersion = "v0.1.0314";
-    public static final String lastReviseDate = "14 Mar 2016";
+    public static final String packageVersion = "v2.0";
+    public static final String lastReviseDate = "17 Mar 2016";
 }
 
 public class QuantLD {   
@@ -26,8 +27,10 @@ public class QuantLD {
      * @param args the command line arguments
      * @throws org.apache.commons.cli.ParseException can not parse opts
      * @throws java.io.IOException can not open input file
+     * @throws java.lang.InterruptedException
+     * @throws java.util.concurrent.ExecutionException
      */
-    public static void main(String[] args) throws ParseException, IOException {
+    public static void main(String[] args) throws ParseException, IOException, InterruptedException, ExecutionException {
         long startTime = System.currentTimeMillis();
         JOptsParse jop = new JOptsParse();
         HashMap<String, String> params = jop.getOpt(args);
@@ -46,6 +49,7 @@ public class QuantLD {
         int perm = 0;
         boolean seedb = false;
         long seedl = 0;
+        int intThread=1;
         
         if(params.containsKey("T")){
             tol = Double.parseDouble(params.get("T"));
@@ -75,6 +79,10 @@ public class QuantLD {
             seedl = Long.parseLong(params.get("S"));
             seedb = true;
         }
+        if(params.containsKey("nt")){
+            intThread=Integer.parseInt(params.get("nt"));
+        }
+        
         // check parameters
         String[] ldMeasures = new String[]{"r2","dp","sr2"};
         if(!Arrays.asList(ldMeasures).contains(ldMeasure)){
@@ -102,7 +110,8 @@ public class QuantLD {
         
         // printout program
         System.out.println( "@-------------------------------------------------------------@");
-        System.out.println( "|       quantLD       |    " +  globalSetting.packageVersion + "   |     " + globalSetting.lastReviseDate  + "      |");
+        System.out.print( "|       quantLD       |      " +  globalSetting.packageVersion);
+        System.out.println( "      |     " + globalSetting.lastReviseDate  + "      |");
         System.out.println( "|-------------------------------------------------------------|");
         System.out.println( "|  (C) 2016 Felix Yanhui Fan, GNU General Public License, v2  |");
         System.out.println( "|-------------------------------------------------------------|");
@@ -155,7 +164,7 @@ public class QuantLD {
         if(perm == 0){
             wtf.runQuantLD(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr,nrow);
         }else{
-            wtf.runQuantLDPerm(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr, nrow, perm);
+            wtf.runQuantLDPerm(output, fileName1, fileName2, tDist, winSize, ldMeasure, tol, maxItr, nrow, perm,intThread);
         }
         
         long endTime = System.currentTimeMillis();

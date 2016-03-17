@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -167,12 +168,15 @@ public class WriteTxtFile{
      * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
      * @param maxItr maximum iterate
      * @param perm times of permutation
+     * @param intThread threads used in permutation
      * @throws IOException can not open file
+     * @throws java.lang.InterruptedException
+     * @throws java.util.concurrent.ExecutionException
      */
-    public void outputTxtPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int perm) throws IOException{   
+    public void outputTxtPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int perm, int intThread) throws IOException, InterruptedException, ExecutionException{   
         File outfile = new File(outName);
 
-        double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm);
+        double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm, intThread);
         double[] pos = rtf.readPos(fileName1, winSize);
         int n = ans.length;
         try(FileOutputStream fop = new FileOutputStream(outfile)){
@@ -206,12 +210,15 @@ public class WriteTxtFile{
      * @param tol controls convergence. Algorithm stops when sum of absolute differences between new and old haplotype frequencies is less than tol.
      * @param maxItr maximum iterate
      * @param perm times of permutation
+     * @param intThread threads used in permutation
      * @throws IOException can not open file
+     * @throws java.lang.InterruptedException
+     * @throws java.util.concurrent.ExecutionException
      */
-    public void outputTxtPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr, int perm) throws IOException{   
+    public void outputTxtPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr, int perm,int intThread) throws IOException, InterruptedException, ExecutionException{   
         File outfile = new File(outName);
 
-        double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
+        double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm, intThread);
         double[] pos = rtf.readPos(fileName1, winSize, start, end);
         int n = ans.length;
         try(FileOutputStream fop = new FileOutputStream(outfile)){
@@ -300,12 +307,15 @@ public class WriteTxtFile{
      * @param maxItr maximum iterate
      * @param nrow read how many rows each time
      * @param perm times of permutation
+     * @param intThread threads used in permutation
      * @throws IOException can not open file
+     * @throws java.lang.InterruptedException
+     * @throws java.util.concurrent.ExecutionException
      */
-    public void runQuantLDPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int nrow, int perm) throws IOException{
+    public void runQuantLDPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int nrow, int perm,int intThread) throws IOException, InterruptedException, ExecutionException{
         int n = rtf.countLines(fileName1);
         if(n <= nrow){
-            outputTxtPerm(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm);
+            outputTxtPerm(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm, intThread);
         }else{
             int totsplit;
             int start = 1;
@@ -318,7 +328,7 @@ public class WriteTxtFile{
                 System.exit(7);
             }
             String tmpname = tmpdirstr + "/tmp0";
-            outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
+            outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm,intThread);
             for(totsplit=1;;totsplit++){
                 tmpname = tmpdirstr + "/tmp" + totsplit;
                 start = end - winSize + 2;
@@ -326,7 +336,8 @@ public class WriteTxtFile{
                 if(end >= n){
                     end = n;
                 }
-                outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm);
+                System.out.println("-------"+"start:"+start+"-------"+"end:"+end+"------"+"totsplit:"+totsplit+"--------");
+                outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm,intThread);
                 if(end == n){
                     break;
                 }
