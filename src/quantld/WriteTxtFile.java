@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -102,13 +103,16 @@ public class WriteTxtFile{
         double[] ans = bld.batchQuantLD(fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);
         double[] pos = rtf.readPos(fileName1, winSize);
         int n = ans.length;
+        
+        DecimalFormat df = new DecimalFormat("#.####");
+        
         try(FileOutputStream fop = new FileOutputStream(outfile)){
             if(!outfile.exists()){
                 outfile.createNewFile();
             }
                         
             for(int i=0; i<n;i++){
-                String tmp = pos[i] + "\t" + ans[i] + "\n";
+                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush(); 
@@ -139,13 +143,16 @@ public class WriteTxtFile{
         double[] ans = bld.batchQuantLD(fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
         double[] pos = rtf.readPos(fileName1, winSize, start, end);
         int n = ans.length;
+        
+        DecimalFormat df = new DecimalFormat("#.####");
+        
         try(FileOutputStream fop = new FileOutputStream(outfile)){
             if(!outfile.exists()){
                 outfile.createNewFile();
             }
             
             for(int i=0; i<n;i++){
-                String tmp = pos[i] + "\t" + ans[i] + "\n";
+                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush();
@@ -179,13 +186,16 @@ public class WriteTxtFile{
         double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm, intThread);
         double[] pos = rtf.readPos(fileName1, winSize);
         int n = ans.length;
+        
+        DecimalFormat df = new DecimalFormat("#.####");
+        
         try(FileOutputStream fop = new FileOutputStream(outfile)){
             if(!outfile.exists()){
                 outfile.createNewFile();
             }
                         
             for(int i=0; i<n;i++){
-                String tmp = pos[i] + "\t" + ans[i][0] + "\t" + ans[i][1] + "\t" + ans[i][2] + "\n";
+                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i][0]) + "\t" + df.format(ans[i][1]) + "\t" + df.format(ans[i][2]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush(); 
@@ -221,13 +231,16 @@ public class WriteTxtFile{
         double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm, intThread);
         double[] pos = rtf.readPos(fileName1, winSize, start, end);
         int n = ans.length;
+        
+        DecimalFormat df = new DecimalFormat("#.####");
+        
         try(FileOutputStream fop = new FileOutputStream(outfile)){
             if(!outfile.exists()){
                 outfile.createNewFile();
             }
                         
             for(int i=0; i<n;i++){
-                String tmp = pos[i] + "\t" + ans[i][0] + "\t" + ans[i][1] + "\t" + ans[i][2] + "\n";
+                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i][0]) + "\t" + df.format(ans[i][1]) + "\t" + df.format(ans[i][2]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush(); 
