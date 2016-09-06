@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 class globalSetting{
     public static final String packageVersion = "v2.0";
-    public static final String lastReviseDate = "17 Mar 2016";
+    public static final String lastReviseDate = "06 Sep 2016";
 }
 
 public class QuantLD {   

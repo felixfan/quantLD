@@ -100,7 +100,7 @@ public class WriteTxtFile{
      */
     public void outputTxt(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr) throws IOException{   
         File outfile = new File(outName);
-        double[] ans = bld.batchQuantLD(fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);
+        double[] ans = bld.batchQuantLD(fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);       
         double[] pos = rtf.readPos(fileName1, winSize);
         int n = ans.length;
         
@@ -182,7 +182,7 @@ public class WriteTxtFile{
      */
     public void outputTxtPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int perm, int intThread) throws IOException, InterruptedException, ExecutionException{   
         File outfile = new File(outName);
-
+        
         double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm, intThread);
         double[] pos = rtf.readPos(fileName1, winSize);
         int n = ans.length;
@@ -227,7 +227,7 @@ public class WriteTxtFile{
      */
     public void outputTxtPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, int start, int end, double tol, int maxItr, int perm,int intThread) throws IOException, InterruptedException, ExecutionException{   
         File outfile = new File(outName);
-
+        
         double[][] ans = pm.permQuantLD(fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm, intThread);
         double[] pos = rtf.readPos(fileName1, winSize, start, end);
         int n = ans.length;
@@ -267,7 +267,9 @@ public class WriteTxtFile{
      */
     public void runQuantLD(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int nrow) throws IOException{
         int n = rtf.countLines(fileName1);
+        System.out.println("There are total " + n + " variants in " + fileName1);
         if(n <= nrow){
+            System.out.println("processing ...");
             outputTxt(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr);
         }else{
             int totsplit;
@@ -281,6 +283,7 @@ public class WriteTxtFile{
                 System.exit(7);
             }
             String tmpname = tmpdirstr + "/tmp0";
+            System.out.println("processing markers from " + start + " to " + end + "...");
             outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
             for(totsplit=1;;totsplit++){
                 tmpname = tmpdirstr + "/tmp" + totsplit;
@@ -289,6 +292,7 @@ public class WriteTxtFile{
                 if(end >= n){
                     end = n;
                 }
+                System.out.println("processing markers from " + start + " to " + end + "...");
                 outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
                 if(end == n){
                     break;
@@ -327,7 +331,9 @@ public class WriteTxtFile{
      */
     public void runQuantLDPerm(String outName, String fileName1, String fileName2, String method, int winSize, String ldMeasure, double tol, int maxItr, int nrow, int perm,int intThread) throws IOException, InterruptedException, ExecutionException{
         int n = rtf.countLines(fileName1);
+        System.out.println("There are total " + n + " variants in " + fileName1);
         if(n <= nrow){
+            System.out.println("processing ...");
             outputTxtPerm(outName, fileName1, fileName2, method, winSize, ldMeasure, tol, maxItr, perm, intThread);
         }else{
             int totsplit;
@@ -341,6 +347,7 @@ public class WriteTxtFile{
                 System.exit(7);
             }
             String tmpname = tmpdirstr + "/tmp0";
+            System.out.println("processing markers from " + start + " to " + end + "...");
             outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm,intThread);
             for(totsplit=1;;totsplit++){
                 tmpname = tmpdirstr + "/tmp" + totsplit;
@@ -350,6 +357,7 @@ public class WriteTxtFile{
                     end = n;
                 }
                 //System.out.println("-------"+"start:"+start+"-------"+"end:"+end+"------"+"totsplit:"+totsplit+"--------");
+                System.out.println("processing markers from " + start + " to " + end + "...");
                 outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm,intThread);
                 if(end == n){
                     break;

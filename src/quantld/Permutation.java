@@ -86,7 +86,7 @@ public class Permutation{
         
         double[][][] r2a = cld.CalRDprime(gc[0], winSize, ldMeasure);
         double[][][] r2b = cld.CalRDprime(gc[1], winSize, ldMeasure);       
-        double[] orgLDdiff = bld.calLDdiff(r2a, r2b, method, ldMeasure);
+        double[] orgLDdiff = bld.calLDdiff(r2a, r2b, method);
 
         // permutation step
         int ns1 = gc[0].length;    // number of SNP in pop 1
@@ -157,7 +157,7 @@ public class Permutation{
         
         double[][][] r2a = cld.CalRDprime(gc[0], winSize, ldMeasure);
         double[][][] r2b = cld.CalRDprime(gc[1], winSize, ldMeasure);
-        double[] orgLDdiff = bld.calLDdiff(r2a, r2b, method, ldMeasure);
+        double[] orgLDdiff = bld.calLDdiff(r2a, r2b, method);
 
         // permutation step
         int ns1 = gc[0].length;    // number of SNP in pop 1
@@ -263,7 +263,7 @@ public class Permutation{
             double[][][] r2ap = cld.CalRDprime(gcap, winSize, ldMeasure);
             double[][][] r2bp = cld.CalRDprime(gcbp, winSize, ldMeasure);
             BatchLD bld = new BatchLD();
-            double[] pmLDdiff = bld.calLDdiff(r2ap, r2bp, method, ldMeasure);
+            double[] pmLDdiff = bld.calLDdiff(r2ap, r2bp, method);
             
             synchronized(this){
                 for(int i=0; i<pmLDdiff.length; i++){

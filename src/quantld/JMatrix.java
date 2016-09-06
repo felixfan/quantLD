@@ -51,29 +51,54 @@ public class JMatrix{
         return tp;
     }
     
+    public static boolean hasComplexEigenvalues(EigenvalueDecomposition e) {
+        double[] imagEigenvalues = e.getImagEigenvalues();
+        for (int i = 0; i < imagEigenvalues.length; i++) {
+            if (imagEigenvalues[i] > 1e-12) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
-     * varLD statistic
+     * varLD varLD Trace Difference of EigenValue
      * @param a LD measure matrix of the first population
      * @param b LD measure matrix of the second population
      * @return trace of eigenvalue difference
      */
     protected double calTraceDiffEigValue(double[][] a, double[][] b){
+        boolean flag = false;
         Matrix M = new Matrix(a);
         EigenvalueDecomposition E = new EigenvalueDecomposition(M);
         double[] d = E.getRealEigenvalues();
-        double[] im = E.getImagEigenvalues();
+        double[] im = new double[d.length];
+        if(hasComplexEigenvalues(E)){
+            im = E.getImagEigenvalues();
+            flag = true;
+        }
         
         Matrix M2 = new Matrix(b);
         EigenvalueDecomposition E2 = new EigenvalueDecomposition(M2);
-        double[] d2 = E2.getRealEigenvalues();       
-        double[] im2 = E2.getImagEigenvalues();
+        double[] d2 = E2.getRealEigenvalues();
+        double[] im2 = new double[d2.length];
+        if(hasComplexEigenvalues(E)){
+            im2 = E2.getImagEigenvalues();
+            flag = true;
+        }
         
         double ev = 0.0;
         int n = d.length;
-        for(int i=0; i<n;i++){
-            ev += Math.sqrt(Math.pow(d[i]-d2[i],2)+Math.pow(im[i]-im2[i],2));
-        }
         
+        if(flag){
+            for(int i=0; i<n;i++){
+                ev += Math.sqrt(Math.pow(d[i]-d2[i],2)+Math.pow(im[i]-im2[i],2));
+            }
+        }else{
+            for(int i=0; i<n;i++){
+                ev += Math.abs(d[i]-d2[i]);
+            }
+        }
         return ev;
     }
     
