@@ -283,7 +283,7 @@ public class WriteTxtFile{
                 System.exit(7);
             }
             String tmpname = tmpdirstr + "/tmp0";
-            System.out.println("processing markers from " + start + " to " + end + "...");
+            System.out.println("processing markers from " + start + " to " + end + " (total: " + n + ") ...");
             outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
             for(totsplit=1;;totsplit++){
                 tmpname = tmpdirstr + "/tmp" + totsplit;
@@ -292,7 +292,7 @@ public class WriteTxtFile{
                 if(end >= n){
                     end = n;
                 }
-                System.out.println("processing markers from " + start + " to " + end + "...");
+                System.out.println("processing markers from " + start + " to " + end + " (total: " + n + ") ...");
                 outputTxt(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr);
                 if(end == n){
                     break;
@@ -347,7 +347,7 @@ public class WriteTxtFile{
                 System.exit(7);
             }
             String tmpname = tmpdirstr + "/tmp0";
-            System.out.println("processing markers from " + start + " to " + end + "...");
+            System.out.println("processing markers from " + start + " to " + end + " (total: " + n + ") ...");
             outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm,intThread);
             for(totsplit=1;;totsplit++){
                 tmpname = tmpdirstr + "/tmp" + totsplit;
@@ -356,8 +356,7 @@ public class WriteTxtFile{
                 if(end >= n){
                     end = n;
                 }
-                //System.out.println("-------"+"start:"+start+"-------"+"end:"+end+"------"+"totsplit:"+totsplit+"--------");
-                System.out.println("processing markers from " + start + " to " + end + "...");
+                System.out.println("processing markers from " + start + " to " + end + " (total: " + n + ") ...");
                 outputTxtPerm(tmpname, fileName1, fileName2, method, winSize, ldMeasure, start, end, tol, maxItr, perm,intThread);
                 if(end == n){
                     break;
