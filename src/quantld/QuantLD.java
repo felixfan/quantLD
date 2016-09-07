@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 class globalSetting{
     public static final String packageVersion = "v2.0";
-    public static final String lastReviseDate = "06 Sep 2016";
+    public static final String lastReviseDate = "07 Sep 2016";
 }
 
 public class QuantLD {   
@@ -91,7 +91,7 @@ public class QuantLD {
         }
         String[] tDists = new String[]{"tst","tpc","evd","cad","mad","eud","chd","bcd"};
         if(!Arrays.asList(tDists).contains(tDist)){
-            System.out.println("--test only support tst, tpc, evd, cad, mad, eud, chd, bcd");
+            System.out.println("--ld-diff-measure only support tst, tpc, evd, cad, mad, eud, chd, bcd");
             System.exit(2);
         }
         if(tol > 1){
