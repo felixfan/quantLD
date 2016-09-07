@@ -112,7 +112,7 @@ public class WriteTxtFile{
             }
                         
             for(int i=0; i<n;i++){
-                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i]) + "\n";
+                String tmp = fileName1 + "\t" + fileName2 + "\t" + df.format(pos[i]) + "\t" + df.format(ans[i]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush(); 
@@ -152,7 +152,7 @@ public class WriteTxtFile{
             }
             
             for(int i=0; i<n;i++){
-                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i]) + "\n";
+                String tmp = fileName1 + "\t" + fileName2 + "\t" + df.format(pos[i]) + "\t" + df.format(ans[i]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush();
@@ -195,7 +195,7 @@ public class WriteTxtFile{
             }
                         
             for(int i=0; i<n;i++){
-                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i][0]) + "\t" + df.format(ans[i][1]) + "\t" + df.format(ans[i][2]) + "\n";
+                String tmp = fileName1 + "\t" + fileName2 + "\t" + df.format(pos[i]) + "\t" + df.format(ans[i][0]) + "\t" + df.format(ans[i][1]) + "\t" + df.format(ans[i][2]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush(); 
@@ -240,7 +240,7 @@ public class WriteTxtFile{
             }
                         
             for(int i=0; i<n;i++){
-                String tmp = df.format(pos[i]) + "\t" + df.format(ans[i][0]) + "\t" + df.format(ans[i][1]) + "\t" + df.format(ans[i][2]) + "\n";
+                String tmp = fileName1 + "\t" + fileName2 + "\t" + df.format(pos[i]) + "\t" + df.format(ans[i][0]) + "\t" + df.format(ans[i][1]) + "\t" + df.format(ans[i][2]) + "\n";
                 byte[] contentInBytes = tmp.getBytes();
                 fop.write(contentInBytes);
                 fop.flush(); 
