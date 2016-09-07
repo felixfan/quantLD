@@ -254,16 +254,14 @@ public class ReadTxtFile {
         }
         int l = n - winSize + 1;
         double[] pos = new double[l];
-        int m = winSize / 2;
-        if(winSize % 2 == 1){
-            for(int j=0;j<l;j++){
-                pos[j] = Double.parseDouble(dat[m + j]);
+        for(int j=0;j<l;j++){
+            double mean = 0;
+            for(int k=0; k<winSize; k++){
+                mean += Double.parseDouble(dat[j+k]);
             }
-        }else{
-            for(int j=0;j<l;j++){
-                pos[j] = (Double.parseDouble(dat[m + j -1])+Double.parseDouble(dat[m + j]))/2.0;
-            }
+            pos[j] = mean/winSize;
         }
+        
         return pos;
     }
     
@@ -304,16 +302,14 @@ public class ReadTxtFile {
         }
         int l = end - start - winSize + 2;
         double[] pos = new double[l];
-        int m = winSize / 2;
-        if(winSize % 2 == 1){
-            for(int j=0;j<l;j++){
-                pos[j] = Double.parseDouble(dat[m + j]);
+        for(int j=0;j<l;j++){
+            double mean = 0;
+            for(int z=0; z<winSize; z++){
+                mean += Double.parseDouble(dat[j+z]);
             }
-        }else{
-            for(int j=0;j<l;j++){
-                pos[j] = (Double.parseDouble(dat[m + j -1])+Double.parseDouble(dat[m + j]))/2.0;
-            }
+            pos[j] = mean/winSize;
         }
+        
         return pos;
     }
     
